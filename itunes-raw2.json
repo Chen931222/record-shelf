@@ -1,0 +1,371 @@
+﻿[
+    {
+        "key":  "tour-collection",
+        "name":  "=",
+        "artist":  "Ed Sheeran",
+        "date":  "2021-10-29T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c5/d8/c6/c5d8c675-63e3-6632-33db-2401eabe574d/190296491412.jpg/100x100bb.jpg",
+        "cid":  1581087024
+    },
+    {
+        "key":  "tour-collection",
+        "name":  "Bad Habits - Single",
+        "artist":  "Ed Sheeran",
+        "date":  "2021-06-25T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/63/45/cc/6345cc98-aa83-ad6e-e3c9-1a36ff9838a4/190296614316.jpg/100x100bb.jpg",
+        "cid":  1571330207
+    },
+    {
+        "key":  "tour-collection",
+        "name":  "Perfect Duet (with Beyoncé) - Single",
+        "artist":  "Ed Sheeran",
+        "date":  "2017-11-30T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/6f/24/35/6f2435c0-bd47-5882-8211-c4bab6661841/190295694975.jpg/100x100bb.jpg",
+        "cid":  1318665235
+    },
+    {
+        "key":  "tour-collection",
+        "name":  "I Don\u0027t Care (Chronixx \u0026 Koffee Remix) - Single",
+        "artist":  "Ed Sheeran \u0026 Justin Bieber",
+        "date":  "2019-06-25T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/93/81/20/93812029-ace3-b550-112c-7b412cccf7a7/190295391829.jpg/100x100bb.jpg",
+        "cid":  1469522641
+    },
+    {
+        "key":  "primero-soy-mexicana",
+        "name":  "Primero Soy Mexicana",
+        "artist":  "Ángela Aguilar",
+        "date":  "2018-03-02T08:00:00Z",
+        "tracks":  11,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/3e/9b/cc/3e9bcc5e-a0aa-9fe8-71c6-91d070d68d2c/752830084681_Cover.jpg/100x100bb.jpg",
+        "cid":  1352644928
+    },
+    {
+        "key":  "primero-soy-mexicana",
+        "name":  "Ahí Donde Me Ven - Single",
+        "artist":  "Ángela Aguilar",
+        "date":  "2021-06-10T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/15/6c/ce/156cce38-d9dc-b2af-f9f9-636460aac84a/659635755474_Cover.jpg/100x100bb.jpg",
+        "cid":  1717161788
+    },
+    {
+        "key":  "primero-soy-mexicana",
+        "name":  "En Realidad - Single",
+        "artist":  "Ángela Aguilar",
+        "date":  "2021-04-02T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1d/db/c2/1ddbc249-a788-7ff2-7c34-85965ef8c2ce/645875847895_Cover.jpg/100x100bb.jpg",
+        "cid":  1717162044
+    },
+    {
+        "key":  "primero-soy-mexicana",
+        "name":  "Qué Agonía (Remix) - Single",
+        "artist":  "Yahritza Y Su Esencia, Yuridia \u0026 Ángela Aguilar",
+        "date":  "2023-06-27T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/98/9b/f8/989bf89c-6ec6-63ad-8543-44bf57d94c32/196871175913.jpg/100x100bb.jpg",
+        "cid":  1691934739
+    },
+    {
+        "key":  "hate-that",
+        "name":  "hate that i made you love me - Single",
+        "artist":  "Ariana Grande",
+        "date":  "2026-06-01T07:00:00Z",
+        "tracks":  2,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/dc/97/01/dc9701ca-b443-2a84-1966-bccee0adf0e7/26UMGIM66898.rgb.jpg/100x100bb.jpg",
+        "cid":  6774398127
+    },
+    {
+        "key":  "hate-that",
+        "name":  "hate that i made you love me - EP",
+        "artist":  "Ariana Grande",
+        "date":  "2026-06-26T07:00:00Z",
+        "tracks":  5,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/4a/d1/fc/4ad1fcd0-fcca-52cd-f95e-da8c3788c931/26UMGIM72032.rgb.jpg/100x100bb.jpg",
+        "cid":  6782893789
+    },
+    {
+        "key":  "hate-that",
+        "name":  "Hate That I Made You Love Me (Originally by Ariana Grande) [Instrumental] - Single",
+        "artist":  "Vox Freaks",
+        "date":  "2026-06-09T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/c4/ae/63/c4ae6393-aa9e-2e90-3db5-85b3485edd31/199999669135.png/100x100bb.jpg",
+        "cid":  6778516890
+    },
+    {
+        "key":  "hate-that",
+        "name":  "hate that i made you love me (Originally Performed by Ariana Grande) [Karaoke Version] - Single",
+        "artist":  "karaoke SESH",
+        "date":  "2026-06-05T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/39/3d/49/393d4936-2a97-8cde-b64e-27235e333842/427369b2-0fe2-4f28-bc4e-b06665100b64.jpg/100x100bb.jpg",
+        "cid":  6776881045
+    },
+    {
+        "key":  "i-said-i-love-you-first",
+        "name":  "I Said I Love You First",
+        "artist":  "Selena Gomez \u0026 benny blanco",
+        "date":  "2025-03-19T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1a/b1/e6/1ab1e65d-69d0-7f61-4626-a6145f916cba/25UMGIM10095.rgb.jpg/100x100bb.jpg",
+        "cid":  1802734801
+    },
+    {
+        "key":  "i-said-i-love-you-first",
+        "name":  "I Can\u0027t Get Enough - Single",
+        "artist":  "benny blanco, Tainy, Selena Gomez \u0026 J Balvin",
+        "date":  "2019-02-28T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/3c/7a/a6/3c7aa662-5068-b267-d2cc-bb4a72d9499d/19UMGIM15670.rgb.jpg/100x100bb.jpg",
+        "cid":  1453721558
+    },
+    {
+        "key":  "i-said-i-love-you-first",
+        "name":  "Wolves - Single",
+        "artist":  "Selena Gomez \u0026 Marshmello",
+        "date":  "2017-10-25T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/3a/e5/12/3ae51282-a318-71d1-085f-f4d621de44e6/17UM1IM41679.rgb.jpg/100x100bb.jpg",
+        "cid":  1445055015
+    },
+    {
+        "key":  "i-said-i-love-you-first",
+        "name":  "It Ain\u0027t Me - Single",
+        "artist":  "Kygo \u0026 Selena Gomez",
+        "date":  "2017-02-17T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bd/da/4d/bdda4db8-9628-3aaa-e14e-c6e30457bcc0/00602557442908.rgb.jpg/100x100bb.jpg",
+        "cid":  1444631463
+    },
+    {
+        "key":  "ram",
+        "name":  "Random Access Memories",
+        "artist":  "Daft Punk",
+        "date":  "2013-05-17T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e8/43/5f/e8435ffa-b6b9-b171-40ab-4ff3959ab661/886443919266.jpg/100x100bb.jpg",
+        "cid":  617154241
+    },
+    {
+        "key":  "ram",
+        "name":  "Random Access Memories (10th Anniversary Edition)",
+        "artist":  "Daft Punk",
+        "date":  "2013-05-17T07:00:00Z",
+        "tracks":  22,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/86/b1/92/86b192cf-ceb6-6e51-9361-dc4a35e95d22/196589921154.jpg/100x100bb.jpg",
+        "cid":  1673536063
+    },
+    {
+        "key":  "ram",
+        "name":  "Random Access Memories (Drumless Edition)",
+        "artist":  "Daft Punk",
+        "date":  "2023-11-17T08:00:00Z",
+        "tracks":  13,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/c8/6d/11/c86d1183-9e36-fc2f-6490-80568ed056e0/196871342049.jpg/100x100bb.jpg",
+        "cid":  1708115055
+    },
+    {
+        "key":  "ram",
+        "name":  "Lullaby Renditions of Daft Punk - Random Access Memories",
+        "artist":  "Baby Rockstar",
+        "date":  "2014-03-04T08:00:00Z",
+        "tracks":  13,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Features/v4/0a/05/7c/0a057ce0-1933-4ee8-505e-c75754a314b3/dj.rlzzqodr.jpg/100x100bb.jpg",
+        "cid":  832492264
+    },
+    {
+        "key":  "alicia-diary",
+        "name":  "The Diary of Alicia Keys",
+        "artist":  "Alicia Keys",
+        "date":  "2003-12-02T08:00:00Z",
+        "tracks":  15,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c2/07/c6/c207c6ee-e3f1-cad2-1259-69a3ebd08b5c/828765571227.jpg/100x100bb.jpg",
+        "cid":  255342344
+    },
+    {
+        "key":  "alicia-diary",
+        "name":  "The Diary Of Alicia Keys 20",
+        "artist":  "Alicia Keys",
+        "date":  "2003-12-02T08:00:00Z",
+        "tracks":  24,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7d/a3/2d/7da32df5-bec0-99fa-1431-5df4d6fd930a/196871575188.jpg/100x100bb.jpg",
+        "cid":  1714012273
+    },
+    {
+        "key":  "alicia-diary",
+        "name":  "Un-thinkable (I\u0027m Ready) [Remix] {feat. Drake} - Single",
+        "artist":  "Alicia Keys",
+        "date":  "2010-05-28T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4d/5d/5d/4d5d5db9-94c5-8d29-22ab-23ab947e18ff/884977645149.jpg/100x100bb.jpg",
+        "cid":  374980722
+    },
+    {
+        "key":  "alicia-diary",
+        "name":  "Diary (Dance Vault Remixes) - EP",
+        "artist":  "Alicia Keys",
+        "date":  "2006-06-06T07:00:00Z",
+        "tracks":  4,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/12/c3/08/12c308a2-cdb1-a2bc-418b-d9bacb3b2469/828768517154.jpg/100x100bb.jpg",
+        "cid":  259709885
+    },
+    {
+        "key":  "xy",
+        "name":  "X\u0026Y",
+        "artist":  "Coldplay",
+        "date":  "2005-06-06T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/0c/82/48/0c8248a8-4a5b-d30d-8056-f32d650d2fc9/190295978068.jpg/100x100bb.jpg",
+        "cid":  1123076757
+    },
+    {
+        "key":  "xy",
+        "name":  "A Rush of Blood to the Head",
+        "artist":  "Coldplay",
+        "date":  "2002-08-26T07:00:00Z",
+        "tracks":  11,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b9/b4/2a/b9b42ad1-1e25-5096-da43-497a247e69a3/190295978051.jpg/100x100bb.jpg",
+        "cid":  1122775993
+    },
+    {
+        "key":  "xy",
+        "name":  "Mylo Xyloto",
+        "artist":  "Coldplay",
+        "date":  "2011-10-19T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fa/41/1c/fa411c37-7a65-8a3e-71c9-4b566c49617c/5099967983858_1562x1562_300dpi.jpg/100x100bb.jpg",
+        "cid":  726372830
+    },
+    {
+        "key":  "xy",
+        "name":  "x (Wembley Edition)",
+        "artist":  "Ed Sheeran",
+        "date":  "2014-06-20T07:00:00Z",
+        "tracks":  24,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/2d/36/f9/2d36f9a7-2c3e-ce0f-7fb6-036feecb221f/825646974450.jpg/100x100bb.jpg",
+        "cid":  1050204616
+    },
+    {
+        "key":  "rush-of-blood",
+        "name":  "A Rush of Blood to the Head",
+        "artist":  "Coldplay",
+        "date":  "2002-08-26T07:00:00Z",
+        "tracks":  11,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b9/b4/2a/b9b42ad1-1e25-5096-da43-497a247e69a3/190295978051.jpg/100x100bb.jpg",
+        "cid":  1122775993
+    },
+    {
+        "key":  "rush-of-blood",
+        "name":  "Lullaby Renditions of Coldplay - A Rush of Blood to the Head",
+        "artist":  "Baby Rockstar",
+        "date":  "2015-08-04T07:00:00Z",
+        "tracks":  11,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music5/v4/d6/3c/48/d63c4800-9f24-1903-567f-443b9c18d752/889845515937.jpg/100x100bb.jpg",
+        "cid":  1028642836
+    },
+    {
+        "key":  "rush-of-blood",
+        "name":  "A Head Full of Dreams",
+        "artist":  "Coldplay",
+        "date":  "2015-12-04T08:00:00Z",
+        "tracks":  12,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/c8/0a/6d/c80a6df9-e55a-fb83-0311-f4776984ac67/mzm.lasidxkv.jpg/100x100bb.jpg",
+        "cid":  1053933969
+    },
+    {
+        "key":  "parachutes",
+        "name":  "Parachutes",
+        "artist":  "Coldplay",
+        "date":  "2000-07-10T07:00:00Z",
+        "tracks":  10,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f5/93/8c/f5938c49-964c-31d1-4b33-78b634f71fb7/190295978075.jpg/100x100bb.jpg",
+        "cid":  1122782080
+    },
+    {
+        "key":  "parachutes",
+        "name":  "Mylo Xyloto",
+        "artist":  "Coldplay",
+        "date":  "2011-10-19T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fa/41/1c/fa411c37-7a65-8a3e-71c9-4b566c49617c/5099967983858_1562x1562_300dpi.jpg/100x100bb.jpg",
+        "cid":  726372830
+    },
+    {
+        "key":  "doo-wops",
+        "name":  "Doo-Wops \u0026 Hooligans",
+        "artist":  "Bruno Mars",
+        "date":  "2010-10-04T07:00:00Z",
+        "tracks":  10,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/52/b1/45/52b1452b-229e-78db-231b-7b43fa0077cc/075679956491.jpg/100x100bb.jpg",
+        "cid":  576654788
+    },
+    {
+        "key":  "doo-wops",
+        "name":  "Doo-Wops \u0026 Hooligans (Deluxe)",
+        "artist":  "Bruno Mars",
+        "date":  "2010-10-04T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/98/ae/c2/98aec2e1-3be4-0311-1b44-69348fc87abb/075679956484.jpg/100x100bb.jpg",
+        "cid":  576670451
+    },
+    {
+        "key":  "doo-wops",
+        "name":  "Doo-Wops \u0026 Hooligans",
+        "artist":  "Bruno Mars",
+        "date":  "2010-10-04T07:00:00Z",
+        "tracks":  12,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/25/6d/95/256d95ea-c58c-074d-b6f1-18f5cb4e6b96/075679956293.jpg/100x100bb.jpg",
+        "cid":  578054234
+    },
+    {
+        "key":  "doo-wops",
+        "name":  "Doo-Wops \u0026 Hooligans (Deluxe)",
+        "artist":  "Bruno Mars",
+        "date":  "2010-10-04T07:00:00Z",
+        "tracks":  13,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/83/88/2f/83882f17-1a88-85e3-07ae-9a45adc15b3e/075679599018.jpg/100x100bb.jpg",
+        "cid":  1841435033
+    },
+    {
+        "key":  "24k-magic",
+        "name":  "24K Magic",
+        "artist":  "Bruno Mars",
+        "date":  "2016-11-18T08:00:00Z",
+        "tracks":  9,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e3/47/a0/e347a0cc-87ce-5d05-d560-176c7d48f66e/075679904119.jpg/100x100bb.jpg",
+        "cid":  1161503945
+    },
+    {
+        "key":  "24k-magic",
+        "name":  "24K Magic (R3hab Remix) - Single",
+        "artist":  "Bruno Mars",
+        "date":  "2017-05-26T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/8a/33/2f/8a332f0c-503f-08ca-b3e6-06550cf973c1/075679894229.jpg/100x100bb.jpg",
+        "cid":  1238456101
+    },
+    {
+        "key":  "24k-magic",
+        "name":  "APT. - Single",
+        "artist":  "ROSÉ \u0026 Bruno Mars",
+        "date":  "2024-10-17T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2d/1a/7d/2d1a7d91-587e-0ceb-d434-327bd66d9e86/075679628312.jpg/100x100bb.jpg",
+        "cid":  1773452219
+    },
+    {
+        "key":  "24k-magic",
+        "name":  "Finesse (Remix) [feat. Cardi B] - Single",
+        "artist":  "Bruno Mars",
+        "date":  "2018-01-04T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/56/df/33/56df332a-da4a-d565-f40e-960905ee1a2b/075679878892.jpg/100x100bb.jpg",
+        "cid":  1328526390
+    }
+]

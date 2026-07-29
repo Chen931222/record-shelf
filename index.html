@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>唱片架 — Record Shelf</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fg:#fff;
+  --cover:300px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Inter','Noto Sans TC',sans-serif;
+  background:#262626;
+  color:var(--fg);
+  overflow:hidden;
+  transition:background-color .7s ease;
+  user-select:none;
+}
+/* ---------- header ---------- */
+.header{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px 28px;z-index:40;
+  pointer-events:none;
+}
+.header a{pointer-events:auto}
+.logo{
+  font-weight:800;font-style:italic;font-size:20px;letter-spacing:.02em;
+  color:var(--fg);text-decoration:none;
+}
+.logo span{font-style:normal;font-weight:500;opacity:.55;font-size:12px;margin-left:8px;letter-spacing:.14em}
+/* ---------- stage ---------- */
+.stage{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:18px;
+  padding-bottom:110px;
+}
+.spotify-button{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:#111;text-decoration:none;
+  font-size:13px;font-weight:600;
+  padding:8px 16px;border-radius:99px;
+  transition:transform .18s ease;
+}
+.spotify-button:hover{transform:scale(1.05)}
+.spotify-button svg{width:16px;height:16px;flex:none}
+/* ---------- cd case ---------- */
+.cd-case{position:relative;width:var(--cover);height:var(--cover)}
+.cd{
+  position:absolute;top:50%;left:0;
+  width:calc(var(--cover) * .94);height:calc(var(--cover) * .94);
+  transform:translate(-52px,-50%) rotate(-38deg);
+  transition:transform .6s cubic-bezier(.34,1.4,.4,1);
+  z-index:1;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center, #777 0 6.5%, #dcdcdc 7% 16%, transparent 16.5% 17%, rgba(255,255,255,.16) 17.5% 19%, transparent 19.5%),
+    conic-gradient(from 90deg, #cfd6dd, #e7c7f2 12%, #c9e6f5 25%, #f3e3c0 38%, #cfd6dd 50%, #d9c9f0 62%, #c4ecda 75%, #f0d3cd 88%, #cfd6dd);
+  box-shadow:0 4px 18px rgba(0,0,0,.35);
+}
+.cd::after{ /* center hole */
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at center, var(--hole,#262626) 0 5.4%, transparent 6%);
+  transition:--hole .7s;
+}
+body.playing .cd{
+  transform:translate(-118px,-50%) rotate(0deg);
+  animation:spin 3.2s linear infinite;
+}
+@keyframes spin{to{transform:translate(-118px,-50%) rotate(360deg)}}
+.cover-stack{position:absolute;inset:0;z-index:2}
+.cover{
+  position:absolute;inset:0;
+  opacity:0;pointer-events:none;
+  transition:transform .55s cubic-bezier(.3,1.2,.35,1),opacity .4s ease;
+  transform:translateY(26px) rotate(4deg) scale(.94);
+}
+.cover.active{opacity:1;pointer-events:auto;transform:none;z-index:3}
+.cover.leaving-up{opacity:0;transform:translateY(-34px) rotate(-5deg) scale(.96)}
+.cover.leaving-down{opacity:0;transform:translateY(34px) rotate(5deg) scale(.96)}
+.cover.entering-up{transform:translateY(-26px) rotate(-4deg) scale(.94)}
+.cover img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);
+}
+.cover .sheen{ /* jewel-case gloss */
+  position:absolute;inset:0;
+  border:1px solid rgba(255,255,255,.35);
+  background:linear-gradient(118deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 74%, rgba(255,255,255,.10) 100%);
+  pointer-events:none;
+}
+/* ---------- media data ---------- */
+.media-data{text-align:center;min-height:74px}
+.artist-group{
+  display:flex;justify-content:center;align-items:baseline;gap:10px;
+  font-size:14px;font-weight:700;letter-spacing:.01em;
+}
+.artist-group .collab{opacity:.6;font-weight:500}
+.album-title{
+  margin-top:4px;
+  font-size:clamp(20px,4.4vw,34px);
+  font-weight:800;line-height:1.12;
+  max-width:min(88vw,560px);
+}
+.album-meta{
+  margin-top:6px;
+  font-size:11px;letter-spacing:.08em;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  opacity:.55;
+}
+/* ---------- player ---------- */
+.media-player{display:flex;align-items:center;gap:14px;margin-top:2px}
+.media-button{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.5);
+  background:transparent;color:var(--fg);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:transform .15s ease, background .2s ease;
+}
+.media-button:hover{transform:scale(1.1);background:rgba(255,255,255,.12)}
+.media-button:active{transform:scale(.95)}
+.media-button svg{width:16px;height:16px;fill:currentColor}
+.media-button.play-toggle{width:54px;height:54px;background:#fff;color:#111;border:none}
+.media-button.play-toggle:hover{background:#fff;transform:scale(1.08)}
+.media-button .icon-pause{display:none}
+body.playing .icon-play{display:none}
+body.playing .icon-pause{display:block}
+/* ---------- dock ---------- */
+.dock-wrap{
+  position:fixed;left:0;right:0;bottom:44px;
+  display:flex;justify-content:center;z-index:30;
+}
+.dock{
+  display:flex;align-items:flex-end;gap:9px;
+  padding:9px 14px;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  backdrop-filter:blur(12px);
+  max-width:94vw;overflow-x:auto;scrollbar-width:none;
+}
+.dock::-webkit-scrollbar{display:none}
+.dock-item{
+  position:relative;flex:none;
+  width:42px;height:42px;
+  cursor:pointer;
+  transition:transform .18s cubic-bezier(.3,1.3,.4,1);
+  transform-origin:bottom center;
+}
+.dock-item img{width:100%;height:100%;object-fit:cover;display:block;border-radius:4px}
+.dock-item::after{
+  content:'';position:absolute;left:50%;bottom:-7px;
+  width:4px;height:4px;border-radius:50%;
+  background:#fff;transform:translateX(-50%) scale(0);
+  transition:transform .2s;
+}
+.dock-item.current::after{transform:translateX(-50%) scale(1)}
+.dock-item .tip{
+  position:absolute;bottom:calc(100% + 12px);left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.15);
+  color:#fff;font-size:11px;font-weight:600;white-space:nowrap;
+  padding:5px 10px;border-radius:8px;
+  opacity:0;pointer-events:none;
+  transition:opacity .15s, transform .15s;
+}
+.dock-item:hover .tip{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ---------- footer ---------- */
+.release-footer{
+  position:fixed;left:0;right:0;bottom:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 28px;z-index:20;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:12px;letter-spacing:.06em;
+}
+.footer-side{min-width:64px}
+.footer-side.right{text-align:right}
+.footer-center{opacity:.6;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
+.roll{display:inline-block;transition:transform .3s, opacity .3s}
+.roll.out{transform:translateY(-8px);opacity:0}
+/* ---------- intro ---------- */
+.stage,.dock-wrap,.release-footer,.header{animation:rise .8s cubic-bezier(.2,.8,.3,1) both}
+.dock-wrap{animation-delay:.15s}
+.release-footer{animation-delay:.25s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+/* ---------- mobile ---------- */
+@media (max-width:480px){
+  :root{--cover:240px}
+  .stage{gap:14px;padding-bottom:118px}
+  .header{padding:16px 18px}
+  .release-footer{padding:11px 16px;font-size:10px}
+  .dock-wrap{bottom:40px}
+  .dock{gap:7px}
+  .dock-item{width:36px;height:36px}
+  body.playing .cd{transform:translate(-64px,-50%)}
+  @keyframes spin{to{transform:translate(-64px,-50%) rotate(360deg)}}
+  .album-title{font-size:clamp(18px,6vw,24px)}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="#">唱片架<span>RECORD SHELF</span></a>
+</header>
+
+<main class="stage">
+  <a class="spotify-button" id="spotifyBtn" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#1DB954"/><path d="M17.6 16.7c-.2.35-.66.46-1 .24-2.76-1.69-6.24-2.07-10.33-1.13-.4.09-.79-.16-.88-.55-.09-.4.16-.79.55-.88 4.48-1.02 8.32-.58 11.42 1.31.35.21.46.67.24 1.01zm1.5-3.35c-.27.44-.84.58-1.28.31-3.16-1.94-7.98-2.5-11.72-1.37-.5.15-1.02-.13-1.17-.62-.15-.5.13-1.02.62-1.17 4.28-1.3 9.58-.67 13.24 1.57.44.27.58.84.31 1.28zm.13-3.49C15.5 7.61 9.35 7.4 5.74 8.5c-.58.18-1.2-.15-1.37-.73-.18-.58.15-1.19.73-1.37 4.15-1.26 11-1.02 15.35 1.56.53.31.7 1 .39 1.52-.31.53-1 .7-1.52.39z" fill="#fff"/></svg>
+    <span>Open in Spotify</span>
+  </a>
+
+  <div class="cd-case">
+    <div class="cd" id="cd"></div>
+    <div class="cover-stack" id="coverStack"></div>
+  </div>
+
+  <div class="media-data">
+    <div class="artist-group">
+      <span id="artistName"></span>
+      <span class="collab" id="collabName"></span>
+    </div>
+    <h1 class="album-title" id="albumTitle"></h1>
+    <div class="album-meta" id="albumMeta"></div>
+  </div>
+
+  <div class="media-player">
+    <button class="media-button" id="prevBtn" aria-label="上一張">
+      <svg viewBox="0 0 16 16"><path d="M3.3 8 13 1.8v12.4L3.3 8zM2 1.5h1.6v13H2v-13z"/></svg>
+    </button>
+    <button class="media-button play-toggle" id="playBtn" aria-label="播放 / 暫停">
+      <svg class="icon-play" viewBox="0 0 16 16"><path d="M4 1.6 14 8 4 14.4V1.6z"/></svg>
+      <svg class="icon-pause" viewBox="0 0 16 16"><path d="M3 1.5h3.4v13H3v-13zm6.6 0H13v13H9.6v-13z"/></svg>
+    </button>
+    <button class="media-button" id="nextBtn" aria-label="下一張">
+      <svg viewBox="0 0 16 16"><path d="M12.7 8 3 1.8v12.4L12.7 8zM14 1.5h-1.6v13H14v-13z"/></svg>
+    </button>
+  </div>
+</main>
+
+<div class="dock-wrap">
+  <nav class="dock" id="dock" aria-label="專輯時間軸"></nav>
+</div>
+
+<footer class="release-footer">
+  <div class="footer-side"><span class="roll" id="footDate"></span></div>
+  <div class="footer-center">&lt;&lt; scroll timeline &gt;&gt;&gt;</div>
+  <div class="footer-side right"><span class="roll" id="footYear"></span></div>
+</footer>
+
+<script>
+/* ================= data（新 → 舊）================= */
+const ALBUMS = [
+  {id:'hate-that', title:'hate that i made you love me', artist:'Ariana Grande', collab:'',
+   date:'Jun 1', year:'2026', bg:'#303030', meta:'1 song · 3 min',
+   q:'Ariana Grande hate that i made you love me', ptrack:'hate that i made you love me',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f6/57/8e/f6578efd-9a28-bbba-bae7-1a96db1f2d73/mzaf_15958085704874828743.plus.aac.p.m4a'},
+  {id:'dinastia', title:'DINASTÍA', artist:'Peso Pluma', collab:'Tito Double P',
+   date:'Dec 26', year:'2025', bg:'#282828', meta:'15 songs · 44 min',
+   q:'Peso Pluma Tito Double P DINASTÍA', preview:null, ptrack:null},
+  {id:'tropicoqueta', title:'Tropicoqueta', artist:'KAROL G', collab:'',
+   date:'Jun 20', year:'2025', bg:'#7d190f', meta:'20 songs · 58 min',
+   q:'KAROL G Tropicoqueta', ptrack:'Si Antes Te Hubiera Conocido',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/0f/07/33/0f0733c9-76b3-39f9-9115-9031acd75839/mzaf_249954100848422596.plus.aac.p.m4a'},
+  {id:'i-said-i-love-you-first', title:'I Said I Love You First', artist:'Selena Gomez', collab:'benny blanco',
+   date:'Mar 21', year:'2025', bg:'#7c2c08', meta:'14 songs · 34 min',
+   q:'Selena Gomez benny blanco I Said I Love You First', ptrack:'Bluest Flame',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c2/13/07/c21307fe-9641-b12a-8c7d-e177ed91ba44/mzaf_5936514569221807596.plus.aac.p.m4a'},
+  {id:'american-idiot', title:'American Idiot (20th Anniversary Deluxe Edition)', artist:'Green Day', collab:'',
+   date:'Oct 25', year:'2024', bg:'#84130f', meta:'57 songs · 4 hr',
+   q:'Green Day American Idiot 20th Anniversary', ptrack:'Holiday',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/86/f1/d0/86f1d039-f2d6-2f5b-b34b-2b63504fa6d0/mzaf_3363059623415356317.plus.aac.p.m4a'},
+  {id:'tour-collection', title:'+–=÷× (Tour Collection)', artist:'Ed Sheeran', collab:'',
+   date:'Sep 27', year:'2024', bg:'#17772c', meta:'24 songs · 1 hr 34 min',
+   q:'Ed Sheeran Tour Collection', ptrack:'Perfect',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c7/ba/bc/c7babc66-f598-aaa6-bcf6-307281795817/mzaf_16337361235117168274.plus.aac.p.m4a'},
+  {id:'esquinas', title:'ESQUINAS', artist:'Becky G', collab:'',
+   date:'Sep 28', year:'2023', bg:'#96150f', meta:'13 songs · 41 min',
+   q:'Becky G ESQUINAS', ptrack:'QUERIDO ABUELO',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ba/5c/70/ba5c70fe-092b-43c3-d9f9-d6ec0a80563e/mzaf_10445535617996130475.plus.aac.p.m4a'},
+  {id:'bewitched', title:'Bewitched', artist:'Laufey', collab:'',
+   date:'Sep 8', year:'2023', bg:'#43221a', meta:'14 songs · 48 min',
+   q:'Laufey Bewitched', ptrack:'From The Start',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b0/8c/e1/b08ce131-3860-fdbd-43a9-dc4bf1ec78f8/mzaf_18185086236351287888.plus.aac.p.m4a'},
+  {id:'dawn-fm', title:'Dawn FM', artist:'The Weeknd', collab:'',
+   date:'Jan 7', year:'2022', bg:'#11303b', meta:'16 songs · 51 min',
+   q:'The Weeknd Dawn FM', ptrack:'Take My Breath',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/2f/01/5a/2f015a27-3b54-54f0-b8ea-b2e86d2adb93/mzaf_17192358022715515865.plus.aac.p.m4a'},
+  {id:'black-pumas', title:'Black Pumas', artist:'Black Pumas', collab:'',
+   date:'Jun 21', year:'2019', bg:'#4b1010', meta:'10 songs · 39 min',
+   q:'Black Pumas Black Pumas', ptrack:'Colors',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/38/3a/4d/383a4da2-6532-ff04-3bb3-e480ea7b94db/mzaf_10418172481474599121.plus.aac.p.m4a'},
+  {id:'primero-soy-mexicana', title:'PRIMERO SOY MEXICANA', artist:'Ángela Aguilar', collab:'',
+   date:'Mar 2', year:'2018', bg:'#2d5c50', meta:'11 songs · 41 min',
+   q:'Ángela Aguilar Primero Soy Mexicana', ptrack:'La Llorona',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/e7/86/e4/e786e4c8-d4c5-07d4-b241-946abd9e2ef7/mzaf_17995802873378749347.plus.aac.p.m4a'},
+  {id:'divide', title:'÷ (Deluxe)', artist:'Ed Sheeran', collab:'',
+   date:'Mar 3', year:'2017', bg:'#0f5f76', meta:'16 songs · 59 min',
+   q:'Ed Sheeran Divide Deluxe', ptrack:'Shape of You',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/44/c7/4f/44c74f0d-72dc-6143-d4d0-ba14d661ca0d/mzaf_9566898362556366703.plus.aac.p.m4a'},
+  {id:'24k-magic', title:'24K Magic', artist:'Bruno Mars', collab:'',
+   date:'Nov 18', year:'2016', bg:'#7e1520', meta:'9 songs · 33 min',
+   q:'Bruno Mars 24K Magic', ptrack:'24K Magic',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/72/77/cd/7277cdca-1387-1c7a-529e-72f3c2ed070d/mzaf_3495320363426981496.plus.aac.p.m4a'},
+  {id:'nine-track-mind', title:'Nine Track Mind (Special Edition)', artist:'Charlie Puth', collab:'',
+   date:'Jan 29', year:'2016', bg:'#6f7808', meta:'20 songs · 1 hr 7 min',
+   q:'Charlie Puth Nine Track Mind', ptrack:'One Call Away',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/10/90/20/109020ed-fcde-eb02-88bc-ff7f19619f67/mzaf_6945829285473508042.plus.aac.p.m4a'},
+  {id:'ram', title:'Random Access Memories', artist:'Daft Punk', collab:'',
+   date:'May 17', year:'2013', bg:'#3d4458', meta:'13 songs · 1 hr 14 min',
+   q:'Daft Punk Random Access Memories', ptrack:'Get Lucky',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/d4/d3/1e/d4d31eb4-7405-b806-8346-3c52ad5b4cf4/mzaf_8095545455942962509.plus.aac.p.m4a'},
+  {id:'doo-wops', title:'Doo-Wops & Hooligans', artist:'Bruno Mars', collab:'',
+   date:'Oct 4', year:'2010', bg:'#7f5b00', meta:'10 songs · 35 min',
+   q:'Bruno Mars Doo-Wops Hooligans', ptrack:'Just the Way You Are',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/0c/9d/26/0c9d266f-632d-dbda-770d-55cdded795f8/mzaf_18078867637438469059.plus.aac.p.m4a'},
+  {id:'xy', title:'X&Y', artist:'Coldplay', collab:'',
+   date:'Jun 6', year:'2005', bg:'#0d1520', meta:'13 songs · 1 hr 2 min',
+   q:'Coldplay X&Y', ptrack:'Fix You',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e5/42/e3/e542e340-a45c-695e-e0b8-6155e222ebc0/mzaf_14955746616030397665.plus.aac.p.m4a'},
+  {id:'el-che-vive', title:'El che vive', artist:'群星', collab:'',
+   date:'Sep 15', year:'2004', bg:'#a3140f', meta:'14 songs · 49 min',
+   q:'El che vive', ptrack:'Hasta Siempre',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/01/c7/ac/01c7acd9-4f44-d82e-f32f-5d7d901aee61/mzaf_5458510875636541118.plus.aac.p.m4a'},
+  {id:'alicia-diary', title:'The Diary Of Alicia Keys', artist:'Alicia Keys', collab:'',
+   date:'Dec 2', year:'2003', bg:'#4f4f4f', meta:'15 songs · 57 min',
+   q:'Alicia Keys The Diary of Alicia Keys', ptrack:"If I Ain't Got You",
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/6e/9a/1a/6e9a1a17-c620-b047-91bb-d4ef4d28aac2/mzaf_5457671003416994461.plus.aac.p.m4a'},
+  {id:'rush-of-blood', title:'A Rush of Blood to the Head', artist:'Coldplay', collab:'',
+   date:'Aug 26', year:'2002', bg:'#131313', meta:'11 songs · 54 min',
+   q:'Coldplay A Rush of Blood to the Head', ptrack:'The Scientist',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ae/a6/27/aea62715-e6ae-9562-ba81-1f969a2ee2fa/mzaf_9054259057357054559.plus.aac.p.m4a'},
+  {id:'parachutes', title:'Parachutes', artist:'Coldplay', collab:'',
+   date:'Jul 10', year:'2000', bg:'#181818', meta:'10 songs · 42 min',
+   q:'Coldplay Parachutes', ptrack:'Yellow',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/66/f3/1a/66f31a76-a6ed-cb4c-f353-23310a7ae9a8/mzaf_10593596652344378873.plus.aac.p.m4a'},
+  {id:'queen-gh', title:'Queen: Greatest Hits', artist:'Queen', collab:'',
+   date:'Oct 26', year:'1981', bg:'#8e1216', meta:'77 songs · 5 hr 15 min',
+   q:'Queen Greatest Hits', ptrack:'Bohemian Rhapsody',
+   preview:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/8f/11/52/8f1152a9-fd5f-0021-f546-b97579c22ec3/mzaf_3962258993076347789.plus.aac.p.m4a'},
+];
+
+/* ================= build DOM ================= */
+const stack = document.getElementById('coverStack');
+const dock = document.getElementById('dock');
+ALBUMS.forEach((a, i) => {
+  const c = document.createElement('div');
+  c.className = 'cover';
+  c.innerHTML = `<img src="covers/${a.id}.jpg" alt="${a.title}"><div class="sheen"></div>`;
+  stack.appendChild(c);
+
+  const d = document.createElement('button');
+  d.className = 'dock-item';
+  d.setAttribute('aria-label', a.title);
+  d.style.border = 'none';
+  d.style.background = 'transparent';
+  d.style.padding = '0';
+  d.innerHTML = `<img src="covers/${a.id}.jpg" alt=""><span class="tip">${a.title}</span>`;
+  d.addEventListener('click', () => go(i));
+  dock.appendChild(d);
+});
+const covers = [...stack.children];
+const dockItems = [...dock.children];
+
+/* ================= state ================= */
+let idx = 0;
+let locked = false;
+const audio = new Audio();
+audio.preload = 'none';
+
+const $ = id => document.getElementById(id);
+
+function rollSwap(el, text){
+  el.classList.add('out');
+  setTimeout(() => { el.textContent = text; el.classList.remove('out'); }, 300);
+}
+
+function render(dir){ // dir: 1 = 往舊的, -1 = 往新的, 0 = 初始
+  const a = ALBUMS[idx];
+  document.body.style.backgroundColor = a.bg;
+  document.querySelector('.cd').style.setProperty('--hole', a.bg);
+
+  covers.forEach((c, i) => {
+    c.classList.remove('active','leaving-up','leaving-down','entering-up');
+    if (i === idx) return;
+    c.classList.add(dir >= 0 ? 'leaving-up' : 'leaving-down');
+  });
+  const inc = covers[idx];
+  if (dir < 0) inc.classList.add('entering-up'); // 往新的：從上方進場；往舊的：用預設下方姿勢
+  void inc.offsetWidth; // reflow so the transition runs from the offset pose
+  inc.classList.remove('entering-up');
+  inc.classList.add('active');
+
+  $('artistName').textContent = a.artist;
+  $('collabName').textContent = a.collab;
+  $('albumTitle').textContent = a.title;
+  $('albumMeta').textContent = a.meta + (a.ptrack ? '   ·   ▶ ' + a.ptrack : '');
+  $('spotifyBtn').href = 'https://open.spotify.com/search/' + encodeURIComponent(a.q) + '/albums';
+  rollSwap($('footDate'), a.date);
+  rollSwap($('footYear'), a.year);
+  dockItems.forEach((d, i) => d.classList.toggle('current', i === idx));
+  dockItems[idx].scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+
+  if (!document.body.classList.contains('playing')) return;
+  if (a.preview){ audio.src = a.preview; audio.play().catch(stop); }
+  else { audio.pause(); }
+}
+
+function go(i, dir){
+  if (i === idx || i < 0 || i >= ALBUMS.length) return;
+  const d = dir !== undefined ? dir : (i > idx ? 1 : -1);
+  idx = i;
+  render(d);
+}
+
+/* ================= player ================= */
+function stop(){
+  document.body.classList.remove('playing');
+  audio.pause();
+}
+$('playBtn').addEventListener('click', () => {
+  if (document.body.classList.contains('playing')){ stop(); return; }
+  document.body.classList.add('playing');
+  const a = ALBUMS[idx];
+  if (a.preview){ audio.src = a.preview; audio.play().catch(()=>{}); }
+});
+audio.addEventListener('ended', stop);
+$('prevBtn').addEventListener('click', () => go(idx - 1));
+$('nextBtn').addEventListener('click', () => go(idx + 1));
+
+/* ================= scroll timeline ================= */
+function step(dir){
+  if (locked) return;
+  const t = idx + dir;
+  if (t < 0 || t >= ALBUMS.length) return;
+  locked = true;
+  go(t, dir);
+  setTimeout(() => locked = false, 620);
+}
+window.addEventListener('wheel', e => {
+  if (Math.abs(e.deltaY) < 20) return;
+  step(e.deltaY > 0 ? 1 : -1);
+}, {passive:true});
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') step(1);
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') step(-1);
+  if (e.key === ' '){ e.preventDefault(); $('playBtn').click(); }
+});
+let touchY = null, touchX = null;
+window.addEventListener('touchstart', e => {
+  if (e.target.closest('.dock')) return;
+  touchY = e.touches[0].clientY; touchX = e.touches[0].clientX;
+}, {passive:true});
+window.addEventListener('touchend', e => {
+  if (touchY === null) return;
+  const dy = touchY - e.changedTouches[0].clientY;
+  const dx = touchX - e.changedTouches[0].clientX;
+  touchY = touchX = null;
+  const d = Math.abs(dy) >= Math.abs(dx) ? dy : dx;
+  if (Math.abs(d) < 40) return;
+  step(d > 0 ? 1 : -1);
+}, {passive:true});
+
+/* ================= dock magnification ================= */
+const MAG_RANGE = 90, MAG_MAX = .55;
+dock.addEventListener('mousemove', e => {
+  dockItems.forEach(item => {
+    const r = item.getBoundingClientRect();
+    const dist = Math.abs(e.clientX - (r.left + r.width / 2));
+    const s = dist < MAG_RANGE ? 1 + MAG_MAX * Math.cos((dist / MAG_RANGE) * Math.PI / 2) ** 2 : 1;
+    item.style.transform = `scale(${s.toFixed(3)})`;
+  });
+});
+dock.addEventListener('mouseleave', () => {
+  dockItems.forEach(item => item.style.transform = '');
+});
+
+/* ================= init ================= */
+$('footDate').textContent = ALBUMS[0].date;
+$('footYear').textContent = ALBUMS[0].year;
+render(0);
+</script>
+</body>
+</html>

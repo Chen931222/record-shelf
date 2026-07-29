@@ -1,0 +1,353 @@
+﻿[
+    {
+        "key":  "dinastia",
+        "name":  "CHANEL - Single",
+        "artist":  "Becky G \u0026 Peso Pluma",
+        "date":  "2023-03-30T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/5a/19/a2/5a19a235-9a79-1fc5-0ab0-e90380342449/196589989758.jpg/100x100bb.jpg",
+        "cid":  1679797481
+    },
+    {
+        "key":  "dinastia",
+        "name":  "Sin Tanto Royo - Single",
+        "artist":  "Luis R Conriquez \u0026 Tito Double P",
+        "date":  "2023-10-20T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/55/30/02/5530029e-35d2-1d81-2191-4d404f43bc52/1963621687779_cover.jpg/100x100bb.jpg",
+        "cid":  1711109404
+    },
+    {
+        "key":  "dinastia",
+        "name":  "Por Las Noches - Single",
+        "artist":  "Peso Pluma",
+        "date":  "2021-06-11T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b1/a4/60/b1a4600f-10d6-d22a-3500-df55d6e84b2c/3616556081072.jpg/100x100bb.jpg",
+        "cid":  1727430091
+    },
+    {
+        "key":  "dinastia",
+        "name":  "Te Quiero Así (En Vivo) - Single",
+        "artist":  "Luis R Conriquez, Joel De La P \u0026 Tito Double P",
+        "date":  "2023-12-08T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/73/ab/f7/73abf72c-209e-4efc-9ae3-57a20b97b616/1963621820596_cover.jpg/100x100bb.jpg",
+        "cid":  1720041955
+    },
+    {
+        "key":  "dinastia",
+        "name":  "PLEBADA - Single",
+        "artist":  "El Alfa \u0026 Peso Pluma",
+        "date":  "2023-06-08T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/c0/71/34/c0713495-8299-e0cd-afb6-b3dc59c9cb02/197189040207.jpg/100x100bb.jpg",
+        "cid":  1689873604
+    },
+    {
+        "key":  "bewitched",
+        "name":  "Bewitched",
+        "artist":  "Laufey",
+        "date":  "2023-09-08T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1f/de/6c/1fde6cb4-9703-c214-cdc6-8ecf7d0f0aa0/197189040030.jpg/100x100bb.jpg",
+        "cid":  1690607869
+    },
+    {
+        "key":  "bewitched",
+        "name":  "Bewitched (Rework) - Single",
+        "artist":  "Laufey \u0026 Víkingur Ólafsson",
+        "date":  "2024-06-07T07:00:00Z",
+        "tracks":  2,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1a/2d/3f/1a2d3ffe-b22e-5c22-d309-10cd71f5faf0/198588192856.jpg/100x100bb.jpg",
+        "cid":  1748008672
+    },
+    {
+        "key":  "bewitched",
+        "name":  "Bewitched: The Goddess Edition (Instrumentals)",
+        "artist":  "Laufey",
+        "date":  "2024-04-26T07:00:00Z",
+        "tracks":  18,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c1/1e/b3/c11eb315-96ec-c2d7-3a02-54d4dac87ab9/198588234976.jpg/100x100bb.jpg",
+        "cid":  1749160371
+    },
+    {
+        "key":  "bewitched",
+        "name":  "Bewitched / From The Start (String Quartet Editions) - Single",
+        "artist":  "Laufey",
+        "date":  "2024-06-14T07:00:00Z",
+        "tracks":  2,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/31/36/d6/3136d6ec-02b5-b079-3ac3-da836e72a4de/198588295939.jpg/100x100bb.jpg",
+        "cid":  1750065829
+    },
+    {
+        "key":  "dawn-fm",
+        "name":  "Dawn FM",
+        "artist":  "The Weeknd",
+        "date":  "2022-01-07T08:00:00Z",
+        "tracks":  16,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/92/14/e3/9214e352-3322-3708-4903-cf5059c4985f/21UM1IM58861.rgb.jpg/100x100bb.jpg",
+        "cid":  1603164027
+    },
+    {
+        "key":  "dawn-fm",
+        "name":  "Dawn FM (Alternate World)",
+        "artist":  "The Weeknd",
+        "date":  "2022-01-07T08:00:00Z",
+        "tracks":  24,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/7b/08/f7/7b08f78b-56b2-c6a3-50ff-dc9bd358c816/22UMGIM03886.rgb.jpg/100x100bb.jpg",
+        "cid":  1641739726
+    },
+    {
+        "key":  "dawn-fm",
+        "name":  "Dawn FM (OPN Remix) [feat. Oneohtrix Point Never] - Single",
+        "artist":  "The Weeknd",
+        "date":  "2022-07-08T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/43/78/42/4378428d-a820-4583-8ab9-e14df060810f/22UMGIM75274.rgb.jpg/100x100bb.jpg",
+        "cid":  1633522406
+    },
+    {
+        "key":  "dawn-fm",
+        "name":  "Beauty Behind the Madness",
+        "artist":  "The Weeknd",
+        "date":  "2015-08-28T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/30/05/1e/30051e57-a63a-3acc-4b30-42568293f5f7/15UMGIM36514.rgb.jpg/100x100bb.jpg",
+        "cid":  1440858094
+    },
+    {
+        "key":  "dawn-fm",
+        "name":  "Hawái (Remix) - Single",
+        "artist":  "Maluma \u0026 The Weeknd",
+        "date":  "2020-11-05T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/9c/3c/e1/9c3ce198-2af9-fb1c-3968-905decc0a8d2/886448874324.jpg/100x100bb.jpg",
+        "cid":  1538809228
+    },
+    {
+        "key":  "black-pumas",
+        "name":  "Black Pumas",
+        "artist":  "Black Pumas",
+        "date":  "2019-06-21T07:00:00Z",
+        "tracks":  10,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/9a/98/fa/9a98fa10-588d-2d6c-dd28-07d48455a181/437.jpg/100x100bb.jpg",
+        "cid":  1459935143
+    },
+    {
+        "key":  "black-pumas",
+        "name":  "Black Pumas (Deluxe Edition)",
+        "artist":  "Black Pumas",
+        "date":  "2019-06-21T07:00:00Z",
+        "tracks":  21,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/58/90/30/589030fd-eff4-cb82-80fd-03f042c8f91e/653.jpg/100x100bb.jpg",
+        "cid":  1523522164
+    },
+    {
+        "key":  "black-pumas",
+        "name":  "Black Pumas (Expanded Deluxe Edition)",
+        "artist":  "Black Pumas",
+        "date":  "2019-06-21T07:00:00Z",
+        "tracks":  30,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/83/80/ea/8380ea4b-ba34-30b4-43eb-ce57fb9e8f82/739.jpg/100x100bb.jpg",
+        "cid":  1556136056
+    },
+    {
+        "key":  "black-pumas",
+        "name":  "Chronicles of a Diamond",
+        "artist":  "Black Pumas",
+        "date":  "2023-10-27T07:00:00Z",
+        "tracks":  10,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/f0/99/d0/f099d05f-52cb-284a-f2b9-59b83b0e4db4/1243.jpg/100x100bb.jpg",
+        "cid":  1699670725
+    },
+    {
+        "key":  "black-pumas",
+        "name":  "Colors - Single",
+        "artist":  "Black Pumas",
+        "date":  "2019-04-16T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/eb/09/b7/eb09b7d5-69db-0c46-de8b-11d35340b3aa/425.jpg/100x100bb.jpg",
+        "cid":  1616568522
+    },
+    {
+        "key":  "divide",
+        "name":  "- (Deluxe)",
+        "artist":  "Ed Sheeran",
+        "date":  "2023-05-05T07:00:00Z",
+        "tracks":  19,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/c2/4c/36/c24c3631-08b8-b576-345a-259b395f8dbd/5054197591464.jpg/100x100bb.jpg",
+        "cid":  1673804537
+    },
+    {
+        "key":  "divide",
+        "name":  "Bad Habits - Single",
+        "artist":  "Ed Sheeran",
+        "date":  "2021-06-25T07:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/63/45/cc/6345cc98-aa83-ad6e-e3c9-1a36ff9838a4/190296614316.jpg/100x100bb.jpg",
+        "cid":  1571330207
+    },
+    {
+        "key":  "divide",
+        "name":  "x",
+        "artist":  "Ed Sheeran",
+        "date":  "2014-06-20T07:00:00Z",
+        "tracks":  12,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music2/v4/b0/75/ec/b075ec42-a102-cde1-132b-9cddbc0d3496/825646285891.jpg/100x100bb.jpg",
+        "cid":  858518077
+    },
+    {
+        "key":  "divide",
+        "name":  "x (Deluxe Edition)",
+        "artist":  "Ed Sheeran",
+        "date":  "2014-06-20T07:00:00Z",
+        "tracks":  16,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/a7/7b/92/a77b92fc-d331-dd1b-8772-80597dc51fd0/dj.xllwtvne.jpg/100x100bb.jpg",
+        "cid":  858512800
+    },
+    {
+        "key":  "divide",
+        "name":  "The Great Divide (From \"Secret of the Wings\") - Single",
+        "artist":  "McClain Sisters",
+        "date":  "2012-01-01T08:00:00Z",
+        "tracks":  1,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/85/d1/ad/85d1ad71-c5e1-9f6e-0865-42ff3aa47304/00050087287368.rgb.jpg/100x100bb.jpg",
+        "cid":  1445162147
+    },
+    {
+        "key":  "nine-track-mind",
+        "name":  "Nine Track Mind (Deluxe)",
+        "artist":  "Charlie Puth",
+        "date":  "2016-01-29T08:00:00Z",
+        "tracks":  15,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/4f/ad/3b/4fad3b49-55b8-47bd-7d12-f94fef62d16a/075679902863.jpg/100x100bb.jpg",
+        "cid":  1172538295
+    },
+    {
+        "key":  "nine-track-mind",
+        "name":  "Nine Track Mind",
+        "artist":  "Charlie Puth",
+        "date":  "2016-01-29T08:00:00Z",
+        "tracks":  12,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/7e/05/fd/7e05fd3e-597b-db52-5d87-3ed146d2e2bb/mzm.omtrmqdi.jpg/100x100bb.jpg",
+        "cid":  1031416178
+    },
+    {
+        "key":  "nine-track-mind",
+        "name":  "MCP Performs Charlie Puth: Nine Track Mind",
+        "artist":  "Molotov Cocktail Piano",
+        "date":  "2016-02-12T08:00:00Z",
+        "tracks":  13,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music49/v4/30/90/13/30901333-13c4-d4da-cc31-ff249bc62d24/707541046435.jpg/100x100bb.jpg",
+        "cid":  1083611085
+    },
+    {
+        "key":  "nine-track-mind",
+        "name":  "Lose My Breath (Remixes) [feat. Charlie Puth] - Single",
+        "artist":  "Stray Kids",
+        "date":  "2024-05-13T07:00:00Z",
+        "tracks":  2,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ad/4f/56/ad4f56bd-be9f-533c-120c-2706ff6b0804/8809928951065_Cover.jpg/100x100bb.jpg",
+        "cid":  1745009528
+    },
+    {
+        "key":  "nine-track-mind",
+        "name":  "Lose My Breath - Single",
+        "artist":  "Stray Kids \u0026 Charlie Puth",
+        "date":  "2024-05-10T07:00:00Z",
+        "tracks":  2,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ae/92/48/ae9248b0-28d7-bfa0-af8d-0c56d9fef754/8809928951331_Cover.jpg/100x100bb.jpg",
+        "cid":  1742298109
+    },
+    {
+        "key":  "el-che-vive",
+        "name":  "El Che Vive",
+        "artist":  "Various Artists",
+        "date":  "2004-09-15T07:00:00Z",
+        "tracks":  14,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music/be/6c/ef/mzi.nlwxmcyq.jpg/100x100bb.jpg",
+        "cid":  294749009
+    },
+    {
+        "key":  "el-che-vive",
+        "name":  "Handel: Messiah",
+        "artist":  "London Symphony Orchestra \u0026 Sir Colin Davis",
+        "date":  "2007-10-07T07:00:00Z",
+        "tracks":  55,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c9/39/b2/c939b2da-1470-f9a2-e35f-e5cd2d3da1a4/0822231110750.png/100x100bb.jpg",
+        "cid":  1387816964
+    },
+    {
+        "key":  "el-che-vive",
+        "name":  "Handel\u0027s Messiah",
+        "artist":  "The Tabernacle Choir at Temple Square, Orchestra at Temple Square \u0026 Mack Wilberg",
+        "date":  "2016-03-04T08:00:00Z",
+        "tracks":  54,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/7f/51/a8/7f51a8b8-45c9-d94c-f058-5c787ba2eab7/783027030921_1.jpg/100x100bb.jpg",
+        "cid":  1484691782
+    },
+    {
+        "key":  "el-che-vive",
+        "name":  "Baroque Masterpieces - Pachelbel: Canon, Albinoni: Adagio, Bach: Jesu, Joy of Man\u0027s Desiring",
+        "artist":  "Various Artists",
+        "date":  "2002-01-01T08:00:00Z",
+        "tracks":  22,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Features114/v4/91/c7/9b/91c79bd4-12b5-c723-8a72-834040ef17d8/dj.iljakjjd.jpg/100x100bb.jpg",
+        "cid":  173975441
+    },
+    {
+        "key":  "el-che-vive",
+        "name":  "Ones",
+        "artist":  "Selena",
+        "date":  "2002-10-01T07:00:00Z",
+        "tracks":  20,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/5e/b4/dc/5eb4dc73-cb56-5aaa-761e-04f2bcf16100/13UABIM54244.rgb.jpg/100x100bb.jpg",
+        "cid":  714819386
+    },
+    {
+        "key":  "queen-gh",
+        "name":  "Greatest Hits I, II \u0026 III: The Platinum Collection",
+        "artist":  "Queen",
+        "date":  "2000-11-13T08:00:00Z",
+        "tracks":  51,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/4d/08/2a/4d082a9e-7898-1aa1-a02f-339810058d9e/14DMGIM05632.rgb.jpg/100x100bb.jpg",
+        "cid":  1440650428
+    },
+    {
+        "key":  "queen-gh",
+        "name":  "Greatest Hits (1981 UK Edition)",
+        "artist":  "Queen",
+        "date":  "1981-10-26T08:00:00Z",
+        "tracks":  18,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/fb/93/0f/fb930f12-74b1-ef6e-774e-fb22302f33e9/14DMGIM05636.rgb.jpg/100x100bb.jpg",
+        "cid":  1422650667
+    },
+    {
+        "key":  "queen-gh",
+        "name":  "Greatest Hits (Remastered 2023)",
+        "artist":  "Shania Twain",
+        "date":  "2004-11-08T08:00:00Z",
+        "tracks":  23,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1a/69/f7/1a69f728-24af-dfc9-1e09-fe96d78e0e0f/23UM1IM14819.rgb.jpg/100x100bb.jpg",
+        "cid":  1713844377
+    },
+    {
+        "key":  "queen-gh",
+        "name":  "Greatest Hits",
+        "artist":  "Amy Grant",
+        "date":  "2007-10-02T07:00:00Z",
+        "tracks":  19,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/7c/ef/7f/7cef7fa5-8962-8139-9caf-5734e94a8c62/16UMGIM08912.rgb.jpg/100x100bb.jpg",
+        "cid":  1440844231
+    },
+    {
+        "key":  "queen-gh",
+        "name":  "Greatest Hits - Chapter One",
+        "artist":  "Kelly Clarkson",
+        "date":  "2012-11-16T08:00:00Z",
+        "tracks":  19,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a7/10/e0/a710e05f-e7f5-2ead-46c1-8b073b955bbc/886443702547.jpg/100x100bb.jpg",
+        "cid":  572109021
+    }
+]
