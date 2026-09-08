@@ -1,0 +1,102 @@
+﻿[
+    {
+        "k":  "colors",
+        "track":  "Colors",
+        "artist":  "Black Pumas",
+        "album":  "Black Pumas",
+        "date":  "2019-06-21T07:00:00Z",
+        "ms":  246587,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/9a/98/fa/9a98fa10-588d-2d6c-dd28-07d48455a181/437.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/38/3a/4d/383a4da2-6532-ff04-3bb3-e480ea7b94db/mzaf_10418172481474599121.plus.aac.p.m4a"
+    },
+    {
+        "k":  "price-tag",
+        "track":  "Price Tag (feat. B.o.B)",
+        "artist":  "Jessie J",
+        "album":  "Who You Are",
+        "date":  "2011-01-25T12:00:00Z",
+        "ms":  222533,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/dc/89/29/dc8929b6-ba5b-0b95-d32f-5f711f598b58/11UMGIM02262.rgb.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/03/2f/30/032f3031-ca60-9967-b82c-1c9d2fb2b1c3/mzaf_7409978316038357876.plus.aac.p.m4a"
+    },
+    {
+        "k":  "just-a-dream",
+        "track":  "Just a Dream",
+        "artist":  "Nelly",
+        "album":  "Just a Dream - Single",
+        "date":  "2010-08-16T07:00:00Z",
+        "ms":  237987,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/27/93/26/279326b5-f393-7236-d0d4-b47ff2c032ae/10UMGIM21037.rgb.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/ef/f3/adeff3b1-8ca7-fe69-4404-d4574be0ed5d/mzaf_4818658649735952743.plus.aac.p.m4a"
+    },
+    {
+        "k":  "beautiful-things",
+        "track":  "Beautiful Things",
+        "artist":  "Benson Boone",
+        "album":  "Beautiful Things - Single",
+        "date":  "2024-01-18T08:00:00Z",
+        "ms":  180304,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/54/f4/92/54f49210-e260-b519-ebbd-f4f40ee710cd/054391342751.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4d/d5/00/4dd5006f-ee02-c3f1-94db-0ed4b8dd68f1/mzaf_14250561294796027079.plus.aac.p.m4a"
+    },
+    {
+        "k":  "locked-away",
+        "track":  "Locked Away (feat. Adam Levine)",
+        "artist":  "R. City",
+        "album":  "Locked Away (feat. Adam Levine) - Single",
+        "date":  "2015-06-29T12:00:00Z",
+        "ms":  227280,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music5/v4/ed/ce/a8/edcea8c8-31d8-8e5b-94a2-3d6739e926de/886445346251.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f2/d5/d6/f2d5d634-483f-7e6f-3385-818d6ffbe91f/mzaf_13375317712317642570.plus.aac.p.m4a"
+    },
+    {
+        "k":  "fix-you",
+        "track":  "Fix You",
+        "artist":  "Coldplay",
+        "album":  "X\u0026Y",
+        "date":  "2005-06-06T07:00:00Z",
+        "ms":  294992,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/0c/82/48/0c8248a8-4a5b-d30d-8056-f32d650d2fc9/190295978068.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e5/42/e3/e542e340-a45c-695e-e0b8-6155e222ebc0/mzaf_14955746616030397665.plus.aac.p.m4a"
+    },
+    {
+        "k":  "dont-look-back",
+        "track":  "Don\u0027t Look Back in Anger (Remastered)",
+        "artist":  "Oasis",
+        "album":  "(What\u0027s The Story) Morning Glory? [Deluxe Remastered Edition]",
+        "date":  "1995-10-02T12:00:00Z",
+        "ms":  289560,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/34/2e/cb/342ecb17-ef19-816a-4ce5-e60b9ceec161/5051961073164.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/c1/a1/39/c1a13912-0258-e74a-18ec-01f3b75f9882/mzaf_7973906281407419040.plus.aac.p.m4a"
+    },
+    {
+        "k":  "castle-on-the-hill",
+        "track":  "Castle on the Hill",
+        "artist":  "Ed Sheeran",
+        "album":  "÷ (Deluxe)",
+        "date":  "2017-01-06T08:00:00Z",
+        "ms":  261154,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/15/e6/e8/15e6e8a4-4190-6a8b-86c3-ab4a51b88288/190295851286.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/07/be/08/07be085d-6f06-8b4e-cea1-f40b4dca3815/mzaf_12958775594313934161.plus.aac.p.m4a"
+    },
+    {
+        "k":  "vivir-mi-vida",
+        "track":  "Vivir Mi Vida",
+        "artist":  "Marc Anthony",
+        "album":  "3.0",
+        "date":  "2013-04-26T07:00:00Z",
+        "ms":  252359,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f7/24/ce/f724ce48-4d0d-0cbc-3493-3d935142e5e6/886443947238.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/10/fd/bf/10fdbf20-d17d-a8a2-6058-c1ef9f221068/mzaf_9159790581568803090.plus.aac.p.m4a"
+    },
+    {
+        "k":  "in-the-end",
+        "track":  "In the End",
+        "artist":  "LINKIN PARK",
+        "album":  "Hybrid Theory (Deluxe Edition)",
+        "date":  "2000-10-24T07:00:00Z",
+        "ms":  216294,
+        "art":  "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/53/a7/7f/53a77fab-c54c-a57b-8130-248fc12d0c80/093624948995.jpg/100x100bb.jpg",
+        "preview":  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/3f/cb/c7/3fcbc7cc-0606-7f6e-7fc3-793318cfd1ed/mzaf_16081918663584534594.plus.aac.p.m4a"
+    }
+]
