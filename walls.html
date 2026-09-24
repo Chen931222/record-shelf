@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--
+THESIS：逛唱片牆＝唱片行的新到貨牆。每面牆只露出正面：四格拼貼封面＋站名＋署名，像一排面朝外擺的唱片。
+  拒絕：帶頭像、按讚數、統計的社群卡片。
+OWN-WORLD：與 make.html 同一套（shelf.css）；滑過或聚焦某一面，整頁慢慢染成那面牆第一首的封面色。
+STORY：看到別人擺了什麼 → 點進去聽 → 想做自己的一面。
+FIRST VIEWPORT：左上大字「唱片牆」＋面數；下方就是封面格，桌機 4 欄、手機 2 欄；右上「做一面你的」。
+FORM：新到貨牆（封面朝外的陳列架）。
+-->
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>唱片牆 — 唱片架</title>
+<meta name="description" content="大家擺出來的唱片牆。每一面都是某個人擁有的歌，有些附了主人寫的一句話。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="唱片架">
+<meta property="og:title" content="唱片牆 — 唱片架">
+<meta property="og:description" content="大家擺出來的唱片牆。每一面都是某個人擁有的歌，有些附了主人寫的一句話。">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shelf.css">
+<style>
+.bin{max-width:1280px;margin:0 auto;padding:10px var(--pad) 120px}
+.bin-head{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
+  padding:clamp(20px,5vw,56px) 0 clamp(22px,3vw,34px);
+}
+.bin-head h1{
+  font-weight:800;font-style:italic;font-size:clamp(56px,10vw,128px);line-height:.9;letter-spacing:-.03em;
+}
+.bin-head p{font-size:14px;line-height:1.7;max-width:26em;opacity:.78;margin-top:14px}
+.tally{font-size:12px;text-align:right}
+.tally b{display:block;font:italic 800 40px/1 'Inter',sans-serif;letter-spacing:-.02em;margin-bottom:6px}
+
+.rack{
+  list-style:none;display:grid;gap:clamp(22px,3vw,40px) clamp(16px,2.4vw,32px);
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  border-top:1px solid rgba(var(--ink),.24);padding-top:clamp(22px,3vw,34px);
+}
+.rack a{display:block;text-decoration:none}
+.rack .mosaic{transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.rack a:hover .mosaic,.rack a:focus-visible .mosaic{transform:translateY(-6px) rotate(-1deg);box-shadow:0 26px 54px rgba(0,0,0,.5)}
+.rack a:focus-visible{outline:none}
+.rack a:focus-visible .name{text-decoration:underline;text-underline-offset:4px}
+.rack .name{margin-top:14px;font-weight:800;font-size:17px;line-height:1.3;overflow-wrap:anywhere}
+.rack .by{margin-top:2px;font-size:13px;opacity:.7;overflow-wrap:anywhere}
+.rack .meta{margin-top:8px;font-size:11px;opacity:.55}
+.rack li{animation:settle .6s var(--ease) both}
+.rack li:nth-child(4n+2){animation-delay:.04s}
+.rack li:nth-child(4n+3){animation-delay:.08s}
+.rack li:nth-child(4n+4){animation-delay:.12s}
+@keyframes settle{from{opacity:0;transform:translateY(10px)}}
+
+.more{display:flex;justify-content:center;margin-top:48px}
+.quiet{padding:60px 0 20px;max-width:30em}
+.quiet h2{font-weight:800;font-style:italic;font-size:30px}
+.quiet p{margin-top:10px;font-size:15px;line-height:1.8;opacity:.8}
+.quiet .btn{margin-top:22px}
+
+@media (max-width:480px){
+  .rack{grid-template-columns:1fr 1fr;gap:26px 14px}
+  .rack .name{font-size:15px}
+  .tally{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">唱片架<span>RECORD SHELF</span></a>
+  <nav class="head-nav" aria-label="唱片架">
+    <a class="link" href="walls.html" aria-current="page">逛唱片牆</a>
+    <a class="link" href="make.html">做一面你的</a>
+  </nav>
+</header>
+
+<main class="bin">
+  <div class="bin-head">
+    <div>
+      <h1>唱片牆</h1>
+      <p>每一面都是某個人擁有的歌，有些附了主人寫的一句話。點進去就能聽。</p>
+    </div>
+    <div class="tally mono" id="tally" hidden><b id="total">0</b>面牆</div>
+  </div>
+
+  <ol class="rack" id="rack" aria-label="唱片牆"></ol>
+  <div class="more"><button class="btn" id="moreBtn" type="button" hidden>再看 24 面</button></div>
+
+  <section class="quiet" id="quiet" hidden>
+    <h2 id="quietTitle">還沒有人擺出來。</h2>
+    <p id="quietText">第一面可以是你的。搜幾首你擁有的歌，每首寫一句話，按一下就上牆。</p>
+    <a class="btn solid" href="make.html">做一面你的</a>
+  </section>
+</main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var next = 0, busy = false;
+  var room = getComputedStyle(document.documentElement).getPropertyValue('--room').trim() || '#262626';
+
+  function setBg(hex) {
+    document.body.style.backgroundColor = hex;
+    var v = parseInt(hex.slice(1), 16);
+    document.documentElement.style.setProperty('--hdr', 'rgba(' + [(v >> 16) & 255, (v >> 8) & 255, v & 255].join(',') + ',.94)');
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function day(ms) { var d = new Date(ms); return d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0'); }
+
+  function card(w) {
+    var li = el('li');
+    var a = el('a'); a.href = '/w/' + encodeURIComponent(w.id);
+    a.setAttribute('aria-label', w.name + (w.by ? '，by ' + w.by : '') + '，' + w.n + ' 首');
+    var m = el('div', 'mosaic' + (w.covers.length === 1 ? ' one' : ''));
+    for (var i = 0; i < (w.covers.length === 1 ? 1 : 4); i++) {
+      if (w.covers[i]) { var im = el('img'); im.src = w.covers[i]; im.alt = ''; im.loading = 'lazy'; m.append(im); }
+      else { var b = el('div', 'fill'); b.style.background = w.bg; m.append(b); }   // 不到四首：空格填這面牆自己的顏色
+    }
+    var ob = el('div', 'obi'); ob.setAttribute('aria-hidden', 'true');
+    ob.append(el('b', null, w.name), el('i', null, 'RS-' + String(w.id).toUpperCase()));
+    m.append(ob);
+    a.append(m, el('div', 'name', w.name));
+    if (w.by) a.append(el('div', 'by', 'by ' + w.by));
+    a.append(el('div', 'meta mono', String(w.n).padStart(2, '0') + ' 首　' + day(w.updated)));
+    var tint = function () { setBg(w.bg || room); };
+    a.addEventListener('mouseenter', tint);
+    a.addEventListener('focus', tint);
+    li.append(a);
+    li.dataset.bg = w.bg || room;
+    if (io) io.observe(li);
+    return li;
+  }
+
+  $('rack').addEventListener('mouseleave', function () { setBg(room); });
+  // 手機沒有 hover：捲到畫面中線的那一面負責染色
+  var io = matchMedia('(hover: none)').matches && 'IntersectionObserver' in window
+    ? new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) setBg(e.target.dataset.bg); });
+      }, { rootMargin: '-45% 0px -45% 0px' })
+    : null;
+
+  function load() {
+    if (busy || next === null) return;
+    busy = true; $('moreBtn').disabled = true;
+    fetch('/api/walls?cursor=' + next).then(function (r) {
+      return r.json().then(function (d) { return { ok: r.ok, status: r.status, d: d }; });
+    }).then(function (res) {
+      if (!res.ok) throw res;
+      var d = res.d;
+      d.walls.forEach(function (w) { $('rack').append(card(w)); });
+      next = d.next;
+      $('total').textContent = d.total;
+      $('tally').hidden = !d.total;
+      $('moreBtn').hidden = next === null;
+      $('quiet').hidden = d.total > 0;
+    }).catch(function (e) {
+      $('quiet').hidden = false;
+      $('quietTitle').textContent = e && e.status === 503 ? '唱片牆還沒開張。' : '牆暫時打不開。';
+      $('quietText').textContent = e && e.status === 503
+        ? '伺服器的資料庫還在接線中。你可以先做一面，草稿會留在這台裝置上。'
+        : '連不上伺服器，等一下再重新整理看看。';
+    }).then(function () { busy = false; $('moreBtn').disabled = false; });
+  }
+
+  $('moreBtn').addEventListener('click', load);
+  load();
+})();
+</script>
+</body>
+</html>

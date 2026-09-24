@@ -59,6 +59,20 @@ Everything lives in `data.js`. `ALBUMS` is the wall, newest → oldest.
 show a one-line placeholder instead. The script prints an empty NOTES
 skeleton after each add.
 
+## Web builder and public gallery
+
+People without GitHub use the web: `/make.html` searches iTunes (Taiwan store by
+default), each song can carry one sentence, and publishing returns a public link
+`/?w=<id>` plus a private edit link. `/walls.html` lists everyone's walls.
+
+- No accounts. The edit link is the ownership; the server stores only its hash.
+- On publish the server re-queries iTunes itself. Titles, artwork and previews come
+  from iTunes; users only supply track IDs, colors, sentences, a name and a by-line.
+- Storage is Upstash Redis (`rs:` key prefix) via `KV_REST_API_URL` /
+  `KV_REST_API_TOKEN`. Without them the API answers 503 and the pages say so.
+- Local development needs no keys: `node scripts/dev.mjs` (JSON file store).
+- Moderation: `node --env-file=.env.local scripts/admin.mjs recent|reported|hide|unhide|delete`.
+
 ## Rights
 
 Code is MIT (see LICENSE). Cover images and preview audio come from the

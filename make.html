@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<!--
+THESIS：做一面牆＝壓一張唱片。左邊是封面（前四首拼成的方塊＋站名＋署名），右邊是封底曲目表 A1、A2……
+  每首一行，你的那句話就寫在曲目底下。拒絕：表單精靈、一格一格的卡片搜尋結果。
+OWN-WORLD：主站的世界原封不動——#262626 起底，背景跟著「最新放上去那首」的封面主色（壓暗）慢慢換；
+  墨 #F4EEE3；站名 Inter 800 斜體；1px 墨色細線；等寬小字只給編號、年份、字數；主站開場那顆 pill 按鈕。
+STORY：知道這是用自己擁有的歌壓一張唱片 → 搜歌、放上去、寫一句話 → 按「壓成一面牆」→ 拿到公開連結與編輯連結。
+FIRST VIEWPORT：桌機左 38% 封面（空時是四格細線方框）＋站名大字輸入；右側曲目表，最上方就是「加一首歌」搜尋列。
+  手機：封面在上、曲目表在下，發布鈕黏在底部。
+FORM：封底曲目表，自排結構清單第 5 名；seed 6bed4151。
+-->
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>做一面你的唱片架</title>
+<meta name="description" content="搜歌、放上去、每首寫一句話。不用註冊，發布後拿到一條公開連結。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="唱片架">
+<meta property="og:title" content="做一面你的唱片架">
+<meta property="og:description" content="搜歌、放上去、每首寫一句話。不用註冊，發布後拿到一條公開連結。">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shelf.css">
+<style>
+.press{
+  display:grid;grid-template-columns:minmax(260px,38%) 1fr;gap:clamp(40px,6vw,96px);
+  max-width:1180px;margin:0 auto;padding:18px var(--pad) 120px;
+  align-items:start;
+}
+
+/* ---------- 封面 ---------- */
+.front{position:sticky;top:92px}
+.sleeve{position:relative}
+.sleeve .mosaic{z-index:1}
+.disc{   /* 主站那張 CD：平常藏在封套後面，壓好的那一下滑出來 */
+  position:absolute;top:3%;left:3%;width:94%;height:94%;border-radius:50%;z-index:0;
+  background:
+    radial-gradient(circle at center,#777 0 6.5%,#dcdcdc 7% 16%,transparent 16.5% 17%,rgba(255,255,255,.16) 17.5% 19%,transparent 19.5%),
+    conic-gradient(from 90deg,#cfd6dd,#e7c7f2 12%,#c9e6f5 25%,#f3e3c0 38%,#cfd6dd 50%,#d9c9f0 62%,#c4ecda 75%,#f0d3cd 88%,#cfd6dd);
+  box-shadow:0 6px 22px rgba(0,0,0,.4);
+}
+.front.pressed .disc{animation:pressOut 2.4s var(--ease) both}
+@keyframes pressOut{
+  0%{transform:translateX(0) rotate(0)}
+  45%{transform:translateX(28%) rotate(160deg)}
+  70%{transform:translateX(28%) rotate(250deg)}
+  100%{transform:translateX(0) rotate(360deg)}
+}
+.editing-note{
+  font-size:12px;letter-spacing:.06em;margin-bottom:14px;
+  padding:10px 0;border-top:1px solid rgba(var(--ink),.22);border-bottom:1px solid rgba(var(--ink),.22);
+}
+.mosaic .blank{display:grid;place-items:center}
+.mosaic .hint{position:absolute;inset:0;display:grid;place-items:center;padding:18px 18px 18px 48px;z-index:2}
+.sticker{   /* 收縮膜上的貼紙 */
+  background:rgb(var(--ink));color:#141312;padding:12px 14px;max-width:15em;
+  display:grid;gap:6px;text-align:center;transform:rotate(-2.5deg);
+  box-shadow:0 6px 14px rgba(0,0,0,.3);
+}
+.sticker b{font-size:13px;font-weight:700;line-height:1.5}
+.sticker i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.1em;opacity:.7}
+.title-in{
+  display:block;width:100%;margin-top:22px;
+  font:italic 800 clamp(28px,3.6vw,42px)/1.1 'Inter','Noto Sans TC',sans-serif;letter-spacing:-.02em;
+  color:inherit;background:none;border:0;border-bottom:1px solid rgba(var(--ink),.2);
+  padding:4px 0 8px;
+}
+.by-row{display:flex;align-items:baseline;gap:10px;margin-top:12px}
+.by-row span{font-size:14px;font-weight:700;opacity:.62}
+.by-in{
+  flex:1;min-width:0;font:700 14px/1.4 'Inter','Noto Sans TC',sans-serif;color:inherit;
+  background:none;border:0;border-bottom:1px solid rgba(var(--ink),.2);padding:4px 0 6px;
+}
+.title-in::placeholder,.by-in::placeholder,.note-in::placeholder,.search-in::placeholder{color:rgba(var(--ink),.45)}
+.title-in:focus,.by-in:focus,.note-in:focus,.search-in:focus{outline:none;border-bottom-color:rgb(var(--ink))}
+.count{display:flex;justify-content:space-between;margin-top:18px;font-size:11px}
+
+/* ---------- 曲目表 ---------- */
+.back{min-width:0}
+.back-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-bottom:12px;border-bottom:1px solid rgba(var(--ink),.24);
+}
+.back-head h1{font-size:13px;font-weight:700;letter-spacing:.12em}
+.back-head .mono{font-size:11px}
+
+.search{display:flex;gap:10px;align-items:center;padding:18px 0 10px}
+.search-in{
+  flex:1;min-width:0;font:500 17px/1.4 'Inter','Noto Sans TC',sans-serif;color:inherit;
+  background:none;border:0;border-bottom:1px solid rgba(var(--ink),.3);padding:8px 0;
+}
+.store{
+  font:500 12px/1 var(--mono);letter-spacing:.06em;color:inherit;
+  background:transparent;border:1px solid rgba(var(--ink),.3);border-radius:99px;padding:9px 10px;cursor:pointer;
+}
+.store option{color:#111}
+.search-help{font-size:12px;line-height:1.7;min-height:1.7em}
+
+.results{margin:6px 0 26px;border-top:1px dashed rgba(var(--ink),.22)}
+.res{
+  display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;
+  padding:10px 0;border-bottom:1px dashed rgba(var(--ink),.16);
+}
+.res img{width:44px;height:44px;object-fit:cover;display:block}
+.res .t{font-weight:700;font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.res .s{font-size:12px;line-height:1.5;opacity:.62;overflow-wrap:anywhere}
+.res .tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;margin-left:8px;opacity:1;
+  border:1px solid rgba(var(--ink),.4);padding:1px 5px;white-space:nowrap}
+.res .acts{display:flex;gap:6px;align-items:center}
+.play{
+  width:32px;height:32px;border-radius:50%;border:1px solid rgba(var(--ink),.4);background:none;cursor:pointer;
+  display:grid;place-items:center;flex:none;
+}
+.play svg{width:11px;height:11px;fill:currentColor}
+.play[aria-pressed="true"]{background:rgb(var(--ink));color:#141312}
+
+.tracks{list-style:none;counter-reset:none}
+.track{
+  display:grid;grid-template-columns:34px 40px 1fr auto;gap:0 16px;align-items:start;
+  padding:16px 0;border-bottom:1px solid rgba(var(--ink),.14);
+}
+.track.fresh{animation:settle .5s var(--ease) both}
+@keyframes settle{from{opacity:0;transform:translateY(-6px)}}
+.track .no{font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding-top:4px;opacity:.7}
+.track img{width:40px;height:40px;object-fit:cover;display:block}
+.track .t{display:flex;align-items:baseline;gap:8px;font-weight:700;font-size:15px;line-height:1.35}
+.track .tt{overflow-wrap:anywhere;min-width:0}
+.track .lead{flex:1;min-width:16px;border-bottom:1px dotted rgba(var(--ink),.4);transform:translateY(-4px)}
+.track .dur{font:500 12px/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.04em;opacity:.75}
+.track .s{font-size:12px;line-height:1.5;opacity:.62;margin-top:2px;overflow-wrap:anywhere}
+.track .s .mono{font-size:11px}
+.track .acts{display:flex;gap:6px;align-items:center}
+.remove{background:none;border:0;cursor:pointer;font-size:12px;opacity:.55;padding:8px 4px;border-bottom:1px solid transparent}
+.remove:hover{opacity:1;border-bottom-color:rgba(var(--ink),.5)}
+.note-wrap{grid-column:3 / 5;display:flex;align-items:baseline;gap:10px;margin-top:10px}
+.note-in{
+  flex:1;min-width:0;font:400 14px/1.6 'Inter','Noto Sans TC',sans-serif;color:inherit;
+  background:none;border:0;border-bottom:1px solid rgba(var(--ink),.18);padding:4px 0;
+}
+.note-len{font-size:10px;opacity:0;transition:opacity .2s}
+.note-in:not(:focus):not(:placeholder-shown){border-bottom-color:transparent;font-weight:500}   /* 寫好了就像印在封底上 */
+.note-wrap:hover .note-in:not(:focus){border-bottom-color:rgba(var(--ink),.3)}
+.note-wrap:focus-within .note-len{opacity:.6}
+.track.missing .tt::after{content:'　查不到了，拿掉它';font-weight:500;font-size:12px;opacity:.8}
+.side{
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;opacity:.62;font-variant-numeric:tabular-nums;
+  padding:22px 0 6px;border-bottom:1px solid rgba(var(--ink),.14);
+}
+.track.ghost{grid-template-columns:34px 40px 1fr;align-items:center;border-bottom-style:dashed;opacity:.5}
+.ghost-art{width:40px;height:40px;border:1px dashed rgba(var(--ink),.35)}
+.ghost-line{height:1px;border-bottom:1px dotted rgba(var(--ink),.4)}
+.empty{padding:34px 0;font-size:14px;line-height:1.8;opacity:.7}
+
+/* ---------- 壓片 ---------- */
+.pressbar{margin-top:34px;display:grid;gap:14px}
+.fine{font-size:12px;line-height:1.8;opacity:.62;max-width:34em}
+.pressbar .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.status{font-size:13px;line-height:1.6;min-height:1.6em}
+.danger{background:none;border:0;cursor:pointer;font-size:12px;opacity:.55;border-bottom:1px solid rgba(var(--ink),.3);padding:6px 0}
+.danger:hover{opacity:1}
+
+.done{
+  margin-top:34px;padding:26px 0 8px;border-top:1px solid rgba(var(--ink),.3);
+  animation:settle .6s var(--ease) both;
+}
+.done h2{font-weight:800;font-style:italic;font-size:30px;letter-spacing:-.01em}
+.cat-line{margin-top:6px;font-size:11px;letter-spacing:.12em;opacity:.7}
+.done p{margin-top:8px;font-size:14px;line-height:1.7;opacity:.8}
+.linkrow{margin-top:18px;display:grid;gap:8px}
+.linkrow label{font-size:11px;letter-spacing:.14em;opacity:.62}
+.linkrow .box{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.linkrow output{
+  flex:1;min-width:0;font:12px/1.5 var(--mono);letter-spacing:.02em;
+  padding:10px 0;border-bottom:1px solid rgba(var(--ink),.25);overflow-wrap:anywhere;
+}
+.key-warn{font-size:12px;line-height:1.7;opacity:.75}
+
+.mine{margin-top:40px}
+.mine h3{font-size:11px;letter-spacing:.14em;opacity:.55;font-weight:500;padding-bottom:8px;border-bottom:1px solid rgba(var(--ink),.14)}
+.mine ul{list-style:none}
+.mine li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(var(--ink),.1);font-size:13px}
+.mine li > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mine .cat{font-size:10px;letter-spacing:.1em;opacity:.6;margin-right:10px}
+.colophon{margin-top:56px;padding-top:12px;border-top:1px solid rgba(var(--ink),.14);font-size:10px;line-height:1.8;letter-spacing:.06em;opacity:.5}
+.mine li nav{display:flex;gap:14px;flex:none}
+
+@media (max-width:860px){
+  .press{grid-template-columns:minmax(0,1fr);gap:34px;padding-bottom:140px}
+  .front{   /* 手機：封面縮成左邊的小方塊，站名署名放右邊；搜尋列要進第一屏 */
+    position:static;display:grid;grid-template-columns:clamp(112px,34vw,176px) 1fr;
+    gap:0 16px;align-items:end;
+  }
+  .front > *,.front input{min-width:0}   /* input 有預設最小寬度，會把手機版撐出水平捲動 */
+  .front .title-in,.front .by-in{width:100%}
+  .front .editing-note,.front .count{grid-column:1 / -1}
+  .front .sleeve{grid-row:span 2}
+  .front .title-in{margin-top:0;font-size:clamp(22px,6.4vw,30px)}
+  .front .mosaic .hint{padding:8px 8px 8px 30px}
+  .sticker{padding:7px 8px}
+  .sticker b{font-size:10px;line-height:1.4}
+  .sticker i{display:none}
+  .pressbar .row .btn.solid{flex:1}
+  .note-in,.by-in,.store,.search-in{font-size:16px}   /* iOS 聚焦小於 16px 的欄位會自動放大 */
+  .disc{display:none}
+  .stick{
+    position:fixed;left:0;right:0;bottom:0;z-index:20;
+    padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));
+    background:linear-gradient(to top,var(--hdr,rgba(38,38,38,.96)) 70%,transparent);
+  }
+}
+@media (max-width:480px){
+  .track{grid-template-columns:28px 40px 1fr;gap:0 12px}
+  .track .acts{grid-column:3;justify-content:flex-start;margin-top:8px}
+  .note-wrap{grid-column:2 / 4}
+  .res{grid-template-columns:40px 1fr auto;gap:10px}
+  .res img{width:40px;height:40px}
+  .res .acts{flex-direction:column;align-items:flex-end;gap:6px}
+  .search{flex-wrap:wrap}
+  .search-in{flex:1 1 100%}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">唱片架<span>RECORD SHELF</span></a>
+  <nav class="head-nav" aria-label="唱片架">
+    <a class="link" href="walls.html">逛唱片牆</a>
+    <a class="link" href="make.html" aria-current="page">做一面你的</a>
+  </nav>
+</header>
+
+<main class="press">
+  <!-- 封面 -->
+  <section class="front" id="front" aria-label="封面">
+    <p class="editing-note" id="editingNote" hidden></p>
+    <div class="sleeve">
+      <div class="disc" aria-hidden="true"></div>
+      <div class="mosaic" id="mosaic"><div class="obi" id="obi" aria-hidden="true"><b></b><i></i></div></div>
+    </div>
+    <label class="sr" for="titleIn">站名</label>
+    <input class="title-in" id="titleIn" maxlength="24" placeholder="我的唱片架" autocomplete="off">
+    <div class="by-row">
+      <span>by</span>
+      <label class="sr" for="byIn">署名</label>
+      <input class="by-in" id="byIn" maxlength="24" placeholder="你的名字，可以空著" autocomplete="off">
+    </div>
+    <div class="count mono dim"><span id="sideCount">A 面 0　B 面 0</span><span id="songCount">0 / 60</span></div>
+  </section>
+
+  <!-- 封底曲目表 -->
+  <section class="back" aria-labelledby="backTitle">
+    <div class="back-head">
+      <h1 id="backTitle">做一面你的唱片架</h1>
+      <span class="mono dim">依發行日，新的在前</span>
+    </div>
+
+    <form class="search" id="searchForm" role="search">
+      <label class="sr" for="searchIn">搜尋歌手或歌名</label>
+      <input class="search-in" id="searchIn" type="search" placeholder="加一首歌：歌手、歌名都可以" autocomplete="off" enterkeyhint="search">
+      <label class="sr" for="storeIn">iTunes 商店</label>
+      <select class="store" id="storeIn">
+        <option value="tw">台灣</option>
+        <option value="jp">日本</option>
+        <option value="us">美國</option>
+        <option value="gb">英國</option>
+        <option value="kr">韓國</option>
+        <option value="hk">香港</option>
+      </select>
+      <button class="btn small" type="submit">搜尋</button>
+    </form>
+    <p class="search-help dim" id="searchHelp" aria-live="polite">找不到的歌，換個商店試試。同一首歌常有好幾個版本，先聽再放。</p>
+    <div class="results" id="results" hidden></div>
+
+    <ol class="tracks" id="tracks" aria-label="曲目"></ol>
+    <p class="empty" id="empty">還沒有歌。從上面搜一首你擁有的，放上去。</p>
+
+    <div class="pressbar">
+      <p class="fine">發布之後，任何人拿到連結都看得到這面牆，也會出現在「逛唱片牆」。我們存曲目、你寫的字、站名、署名和封面色；IP 只拿雜湊做限流，一小時後過期。不收 email。</p>
+      <div class="row stick">
+        <button class="btn solid" id="pressBtn" type="button" disabled>壓成一面牆</button>
+        <button class="danger" id="deleteBtn" type="button" hidden>刪掉這面牆</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </div>
+
+    <section class="done" id="done" hidden aria-live="polite">
+      <h2 id="doneTitle">壓好了。</h2>
+      <p class="cat-line mono">目錄編號 <span id="doneCat"></span></p>
+      <p id="doneLede">把公開連結貼給朋友，或貼到 Threads。</p>
+      <div class="linkrow">
+        <label for="pubOut">公開連結</label>
+        <div class="box">
+          <output id="pubOut"></output>
+          <button class="btn small" type="button" data-copy="pubOut">複製</button>
+          <a class="btn small" id="pubOpen" href="#">打開</a>
+        </div>
+      </div>
+      <div class="linkrow">
+        <label for="editOut">編輯連結（只給自己）</label>
+        <div class="box">
+          <output id="editOut"></output>
+          <button class="btn small" type="button" data-copy="editOut">複製</button>
+        </div>
+        <p class="key-warn">這條連結就是鑰匙。存起來，弄丟了就不能再改或刪。這台裝置會記住它，但換手機或清掉瀏覽紀錄就沒了。</p>
+      </div>
+    </section>
+
+    <section class="mine" id="mine" hidden>
+      <h3>這台裝置發布過的牆</h3>
+      <ul id="mineList"></ul>
+    </section>
+
+    <p class="colophon mono">封面與 30 秒試聽 © 各權利人，經 iTunes Search API 提供。唱片架只存連結，不存音檔或圖檔。</p>
+  </section>
+</main>
+
+<script type="module" src="make.js"></script>
+</body>
+</html>

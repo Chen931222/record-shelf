@@ -53,6 +53,34 @@ node scripts/add-song.mjs "歌手" "歌名" [--dry] [--country GB] [--pick N] [-
 key 對歌的 id，沒寫的歌顯示一行占位文案。每次加歌腳本會印出空的
 NOTES 骨架讓你貼。
 
+## 網頁版：做一面你的＋逛唱片牆（2026-09-24）
+
+不會用 GitHub 的人走網頁：`/make.html` 搜歌（預設台灣 iTunes 商店）、放上去、每首寫一句話，
+按「壓成一面牆」拿到公開連結 `/?w=<id>` 和一條私人編輯連結。`/walls.html` 逛所有人的牆。
+
+- 不用註冊。編輯權就是那條編輯連結，伺服器只存它的雜湊。
+- 伺服器發布時自己向 iTunes 再查一次，歌名、封面、試聽以 iTunes 為準；使用者只給曲目 ID、顏色、一句話、站名、署名。
+- 公開牆用同一個播放器顯示（`boot.js` 決定資料來源，`app.js`／`intro.js` 不管資料打哪來）。
+- 被三個不同來源檢舉會自動撤出展示牆（直連仍可看），站主再決定。
+
+資料庫是 Upstash Redis，key 一律 `rs:` 前綴。Vercel 專案要有 `KV_REST_API_URL`／`KV_REST_API_TOKEN`
+（或 `RS_` 前綴版）。沒接上時 API 回 503、頁面照實說「還沒開張」。
+
+本機開發不需要金鑰：
+
+```
+node scripts/dev.mjs            # http://localhost:8533，資料存在 .dev-store.json
+```
+
+審核公開牆：
+
+```
+vercel env pull .env.local
+node --env-file=.env.local scripts/admin.mjs recent      # 最近的牆和每一句話
+node --env-file=.env.local scripts/admin.mjs reported    # 被檢舉的
+node --env-file=.env.local scripts/admin.mjs hide <id>   # 隱藏；unhide 放回；delete 永久刪
+```
+
 ## 站主自用備忘
 
 - 部署用 `vercel --prod`（CLI 直傳工作區，非 git 自動部署）。

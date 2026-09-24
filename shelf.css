@@ -1,0 +1,103 @@
+/* ===== make.html／walls.html 共用 =====
+   繼承主站：#262626 起底、背景隨封面主色（壓暗）緩慢換色、墨 #F4EEE3、
+   Inter＋思源黑體，等寬小字只用在編號、年份、字數這類量測資訊。 */
+
+@property --hdr{syntax:'<color>';inherits:true;initial-value:rgba(38,38,38,.92)}   /* 頁首跟背景同速換色，不留硬邊 */
+:root{
+  transition:--hdr .9s ease;
+  --ink:244,238,227;
+  --room:#262626;
+  --pad:clamp(18px,4vw,56px);
+  --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none !important}
+html{background:var(--room)}
+body{
+  min-height:100vh;
+  font-family:'Inter','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  color:rgb(var(--ink));background:var(--room);
+  transition:background-color .9s ease;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid rgb(var(--ink));outline-offset:3px}
+button{font:inherit;color:inherit}
+
+/* ---------- header（與主站同一條） ---------- */
+.header{
+  position:sticky;top:0;z-index:30;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:22px var(--pad) 18px;
+  background:linear-gradient(to bottom,var(--hdr) 60%,transparent);
+}
+.logo{font-weight:800;font-style:italic;font-size:20px;letter-spacing:.02em;text-decoration:none;white-space:nowrap}
+.logo span{font-style:normal;font-weight:500;opacity:.55;font-size:12px;margin-left:8px;letter-spacing:.14em}
+.head-nav{display:flex;gap:22px;align-items:center}
+.link{
+  font-size:12px;letter-spacing:.08em;text-decoration:none;
+  opacity:.72;padding:6px 0;border:0;border-bottom:1px solid rgba(var(--ink),.35);
+  background:none;cursor:pointer;transition:opacity .2s ease;
+}
+.link:hover,.link[aria-current]{opacity:1}
+
+/* ---------- 封面拼貼（做牆的封面、展示牆的每一面都是它） ---------- */
+.mosaic{
+  position:relative;aspect-ratio:1;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  background:#1b1a19;   /* 不透明的封套：後面的 CD 要等壓好才滑出來 */
+  box-shadow:0 18px 44px rgba(0,0,0,.42);
+}
+.mosaic img{width:100%;height:100%;object-fit:cover;display:block}
+.mosaic.one{grid-template-columns:1fr;grid-template-rows:1fr}
+.mosaic .blank{border:1px solid rgba(var(--ink),.14);margin:-.5px}
+.mosaic::after{ /* 塑膠殼反光，跟主站同一道 */
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:3;
+  border:1px solid rgba(255,255,255,.26);
+  background:linear-gradient(118deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 74%,rgba(255,255,255,.07) 100%);
+}
+
+/* 側標（obi）：日本唱片封套左緣那條紙帶，站名直排，腳底印目錄編號 */
+.obi{
+  position:absolute;left:0;top:0;bottom:0;z-index:2;
+  width:clamp(22px,12%,38px);
+  background:rgb(var(--ink));color:#141312;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:12px 0 10px;
+  box-shadow:3px 0 8px rgba(0,0,0,.28);
+}
+.obi b{
+  writing-mode:vertical-rl;font-weight:800;font-size:clamp(10px,1.05vw,14px);letter-spacing:.14em;line-height:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-height:calc(100% - 70px);
+}
+.obi i{writing-mode:vertical-rl;font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.08em;opacity:.72;white-space:nowrap}
+
+/* ---------- 按鈕（主站開場的 pill） ---------- */
+.btn{
+  font:600 14px/1 'Inter','Noto Sans TC',sans-serif;
+  padding:14px 22px;border-radius:99px;border:1px solid rgba(var(--ink),.45);
+  background:transparent;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  transition:background-color .25s var(--ease),color .25s,border-color .25s,opacity .2s;
+}
+.btn:hover{background:rgba(var(--ink),.1);border-color:rgb(var(--ink))}
+.btn.solid{background:rgb(var(--ink));color:#141312;border-color:rgb(var(--ink))}
+.btn.solid:hover{background:#fff}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn.small{padding:9px 14px;font-size:12px}
+
+.mono{font-family:var(--mono);letter-spacing:.06em}
+.dim{opacity:.62}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:480px){
+  .header{padding:16px 18px 14px}
+  .logo span{display:none}
+  .head-nav{gap:16px}
+  .link{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  body{transition:none}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
