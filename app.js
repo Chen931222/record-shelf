@@ -63,6 +63,7 @@ function renderNotes(dir){
   $('notesNo').textContent = 'NO. ' + pad(idx + 1) + ' / ' + pad(ALBUMS.length);
 
   $('notesHook').textContent = n ? n.hook : '這首還沒有內頁。';
+  $('notesHook').hidden = !!window.WALL && !(n && n.hook);   // 公開牆沒寫字的歌：不留空標題
   const sign = $('notesSign');
   if (sign) {
     sign.hidden = !(window.WALL && n && n.hook);
