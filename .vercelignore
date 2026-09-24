@@ -7,3 +7,7 @@ singles2.json
 _shot-*.png
 _open.html
 _frame.html
+package.json
+package-lock.json
+node_modules
+scripts

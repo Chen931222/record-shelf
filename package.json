@@ -1,0 +1,9 @@
+{
+  "name": "record-shelf",
+  "private": true,
+  "type": "module",
+  "description": "唱片架 — 靜態站，scripts/add-song.mjs 一行指令加歌",
+  "dependencies": {
+    "jpeg-js": "^0.4.4"
+  }
+}
