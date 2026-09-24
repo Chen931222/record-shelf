@@ -42,6 +42,12 @@ body{
   font-weight:800;font-style:italic;font-size:20px;letter-spacing:.02em;
   color:var(--fg);text-decoration:none;
 }
+.intro-link{
+  font-size:12px;letter-spacing:.08em;color:var(--fg);text-decoration:none;
+  opacity:.7;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.35);
+  transition:opacity .2s ease;
+}
+.intro-link:hover{opacity:1}
 .logo span{font-style:normal;font-weight:500;opacity:.55;font-size:12px;margin-left:8px;letter-spacing:.14em}
 /* ---------- stage ---------- */
 .stage{
@@ -373,6 +379,7 @@ body.notes-open .notes-scrim{opacity:1;pointer-events:auto}
 
 <header class="header">
   <a class="logo" href="#">唱片架<span>RECORD SHELF</span></a>
+  <a class="intro-link" href="intro.html">看開場</a>
 </header>
 
 <main class="stage">

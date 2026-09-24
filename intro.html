@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>唱片架 — 開場</title>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700;0,800;1,800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 實驗頁：唱片架的捲動開場。資料抄自 index.html 的 ALBUMS（2026-09-23），主站改資料這裡不會跟著變。 */
+:root{
+  --room:#141312;            /* 關燈後的唱片行 */
+  --ink:#F4EEE3;             /* 主站內頁同一種墨 */
+  --bg:var(--room);
+  --S:300px;                 /* 定格時封面邊長，JS 覆寫 */
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--room)}
+body{
+  font-family:'Inter','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  color:var(--ink);background:var(--bg);
+}
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+a{color:inherit}
+
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:calc(20px + env(safe-area-inset-top,0px)) 24px 20px;
+  pointer-events:none;
+}
+.header a{pointer-events:auto;text-decoration:none}
+.logo{font-weight:800;font-style:italic;font-size:20px;letter-spacing:.02em}
+.logo span{font-style:normal;font-weight:500;opacity:.55;font-size:12px;margin-left:8px;letter-spacing:.14em}
+.skip{font-size:12px;letter-spacing:.08em;opacity:.7;padding:6px 0;border-bottom:1px solid rgba(244,238,227,.35)}
+.skip:hover{opacity:1}
+
+.track{height:480vh;position:relative}
+.stage{
+  position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background:var(--bg);
+  perspective:1400px;
+}
+
+/* ---------- 唱片牆 ---------- */
+.wall{
+  position:absolute;left:0;top:0;
+  display:grid;gap:var(--gap);
+  grid-template-columns:repeat(var(--cols),var(--cell));
+  will-change:transform;
+  transform-style:preserve-3d;
+}
+.sleeve{
+  position:relative;width:var(--cell);height:var(--cell);
+  transition:opacity .2s linear;
+}
+.sleeve img{width:100%;height:100%;object-fit:cover;display:block;box-shadow:0 10px 28px rgba(0,0,0,.5)}
+.sleeve::after,.hero-cover::after{ /* 塑膠殼反光，跟主站同一道 */
+  content:'';position:absolute;inset:0;pointer-events:none;
+  border:1px solid rgba(255,255,255,.28);
+  background:linear-gradient(118deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 74%,rgba(255,255,255,.08) 100%);
+}
+
+/* ---------- 開場字 ---------- */
+.scrim{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(20,19,18,.94) 0%,rgba(20,19,18,.78) 30%,rgba(20,19,18,0) 62%);
+}
+.opening{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:0 24px calc(40px + env(safe-area-inset-bottom,0px));
+  max-width:760px;
+}
+.opening h1{
+  font-weight:800;font-style:italic;
+  font-size:clamp(64px,13vw,168px);line-height:.9;letter-spacing:-.03em;
+}
+.opening p{margin-top:18px;font-size:clamp(15px,1.6vw,18px);line-height:1.6;max-width:34em;opacity:.82}
+.cue{
+  margin-top:26px;display:flex;align-items:center;gap:10px;
+  font-size:11px;letter-spacing:.16em;opacity:.6;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+.cue i{display:block;width:1px;height:28px;background:var(--ink);transform-origin:top;animation:drip 1.8s cubic-bezier(.16,1,.3,1) infinite}
+@keyframes drip{0%{transform:scaleY(0)}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* ---------- 定格：封面＋CD ---------- */
+.hero{position:absolute;left:0;top:0;width:var(--S);height:var(--S);visibility:hidden}
+.hero.on{visibility:visible}
+.hero-cover{position:absolute;inset:0;z-index:2}
+.hero-cover img{width:100%;height:100%;object-fit:cover;display:block;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.cd-pos{position:absolute;inset:3%;z-index:1;will-change:transform}
+.cd-spin{width:100%;height:100%;border-radius:50%}
+.cd-disc{
+  width:100%;height:100%;border-radius:50%;position:relative;
+  background:
+    radial-gradient(circle at center,#777 0 6.5%,#dcdcdc 7% 16%,transparent 16.5% 17%,rgba(255,255,255,.16) 17.5% 19%,transparent 19.5%),
+    conic-gradient(from 90deg,#cfd6dd,#e7c7f2 12%,#c9e6f5 25%,#f3e3c0 38%,#cfd6dd 50%,#d9c9f0 62%,#c4ecda 75%,#f0d3cd 88%,#cfd6dd);
+  box-shadow:0 6px 22px rgba(0,0,0,.4);
+}
+.cd-disc::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at center,var(--bg) 0 5.4%,transparent 6%)}
+.playing .cd-spin{animation:spin 3.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.info{
+  position:absolute;left:50%;top:0;transform:translateX(-50%);
+  width:min(88vw,560px);text-align:center;
+}
+.info .artist{font-size:14px;font-weight:700;letter-spacing:.01em}
+.info h2{
+  margin-top:6px;font-weight:800;line-height:1.08;letter-spacing:-.02em;
+  font-size:clamp(28px,5vw,52px);text-wrap:balance;
+}
+.info .meta{
+  margin-top:10px;font-size:11px;letter-spacing:.1em;opacity:.6;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+.actions{margin-top:24px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{
+  font:600 14px/1 'Inter','Noto Sans TC',sans-serif;color:var(--ink);
+  padding:13px 20px;border-radius:99px;border:1px solid rgba(244,238,227,.45);
+  background:transparent;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:background-color .25s cubic-bezier(.16,1,.3,1),color .25s,border-color .25s;
+}
+.btn:hover{background:rgba(244,238,227,.12);border-color:var(--ink)}
+.btn.solid{background:var(--ink);color:#141312;border-color:var(--ink)}
+.btn.solid:hover{background:#fff}
+.btn[disabled]{opacity:.45;cursor:default}
+.btn .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.playing-btn .dot{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.shuffle{
+  margin-top:18px;background:none;border:0;color:var(--ink);opacity:.6;cursor:pointer;
+  font-size:12px;letter-spacing:.06em;padding:6px 2px;border-bottom:1px solid rgba(244,238,227,.3);
+}
+.shuffle:hover{opacity:1}
+
+@media (prefers-reduced-motion:reduce){
+  .cue i,.playing .cd-spin{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">唱片架<span>RECORD SHELF</span></a>
+  <a class="skip" href="index.html">跳過開場</a>
+</header>
+
+<div class="track" id="track">
+  <div class="stage" id="stage">
+    <div class="wall" id="wall"></div>
+    <div class="scrim" id="scrim"></div>
+
+    <section class="opening" id="opening">
+      <h1>唱片架</h1>
+      <p id="lede"></p>
+      <div class="cue" aria-hidden="true"><i></i>往下捲</div>
+    </section>
+
+    <div class="hero" id="hero" aria-hidden="true">
+      <div class="cd-pos" id="cdPos"><div class="cd-spin" id="cdSpin"><div class="cd-disc" id="cdDisc"></div></div></div>
+      <div class="hero-cover"><img id="heroImg" alt=""></div>
+    </div>
+
+    <section class="info" id="info">
+      <div class="artist" id="artist"></div>
+      <h2 id="title"></h2>
+      <div class="meta" id="meta"></div>
+      <div class="actions" id="actions">
+        <button class="btn" id="playBtn" type="button"><span class="dot"></span><span id="playLabel">試聽 30 秒</span></button>
+        <a class="btn solid" href="index.html">打開唱片架 →</a>
+      </div>
+      <button class="shuffle" id="shuffleBtn" type="button">換一張，再來一次</button>
+    </section>
+  </div>
+</div>
+
+<script>
+const ALBUMS = [{"id":"birds-of-a-feather","t":"BIRDS OF A FEATHER","a":"Billie Eilish","y":"2024","bg":"#263f54","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/34/31/d3/3431d34e-847f-5d66-df83-0bce688d997e/mzaf_18106743962423782018.plus.aac.p.m4a"},{"id":"beautiful-things","t":"Beautiful Things","a":"Benson Boone","y":"2024","bg":"#3f3d3c","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4d/d5/00/4dd5006f-ee02-c3f1-94db-0ed4b8dd68f1/mzaf_14250561294796027079.plus.aac.p.m4a"},{"id":"end-of-beginning","t":"End of Beginning","a":"Djo","y":"2022","bg":"#373447","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/6e/df/af/6edfaf58-f901-e9b5-840b-9ac9e37f34b7/mzaf_8465065510938624101.plus.aac.p.m4a"},{"id":"beautiful-people","t":"Beautiful People","a":"Ed Sheeran Khalid","y":"2019","bg":"#3b3c40","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ee/18/89/ee188926-d676-0d85-b57e-93790f68c411/mzaf_5973313052079190433.plus.aac.p.m4a"},{"id":"colors","t":"Colors","a":"Black Pumas","y":"2019","bg":"#592922","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/38/3a/4d/383a4da2-6532-ff04-3bb3-e480ea7b94db/mzaf_10418172481474599121.plus.aac.p.m4a"},{"id":"i-dont-care","t":"I Don't Care","a":"Ed Sheeran Justin Bieber","y":"2019","bg":"#423f3c","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/84/bb/fb/84bbfbcd-9f63-dfa0-8660-ff86ced2eaaa/mzaf_11693010840075646451.plus.aac.p.m4a"},{"id":"pretender","t":"Pretender","a":"Official髭男dism","y":"2019","bg":"#631829","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/ce/0f/9c/ce0f9cf6-edfd-d964-317a-56781936a96b/mzaf_10158629645505453806.plus.aac.p.m4a"},{"id":"perfect-duet","t":"Perfect Duet","a":"Ed Sheeran Beyoncé","y":"2017","bg":"#15495c","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/61/db/5e/61db5e84-5cfb-181e-fbb7-8248035b7ab1/mzaf_12510832498126033168.plus.aac.p.m4a"},{"id":"castle-on-the-hill","t":"Castle on the Hill","a":"Ed Sheeran","y":"2017","bg":"#155165","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/07/be/08/07be085d-6f06-8b4e-cea1-f40b4dca3815/mzaf_12958775594313934161.plus.aac.p.m4a"},{"id":"locked-away","t":"Locked Away","a":"R. City Adam Levine","y":"2015","bg":"#484132","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f2/d5/d6/f2d5d634-483f-7e6f-3385-818d6ffbe91f/mzaf_13375317712317642570.plus.aac.p.m4a"},{"id":"lost-stars","t":"Lost Stars","a":"Adam Levine","y":"2014","bg":"#245c59","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b1/6b/3c/b16b3c77-ac12-55f6-c9ef-abe3a0548322/mzaf_13143599158828062444.plus.aac.p.m4a"},{"id":"stay-with-me","t":"Stay With Me","a":"Sam Smith","y":"2014","bg":"#403d3b","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d8/90/ef/d890ef3d-95b8-2224-5ff2-4ed56a359449/mzaf_8285804271834164275.plus.aac.p.m4a"},{"id":"only-love-can-hurt","t":"Only Love Can Hurt Like This","a":"Paloma Faith","y":"2014","bg":"#4e2d34","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e1/67/51/e167517f-d31f-ec28-10c2-dea246dde88e/mzaf_16290264548209879114.plus.aac.p.m4a"},{"id":"vivir-mi-vida","t":"Vivir Mi Vida","a":"Marc Anthony","y":"2013","bg":"#403d3b","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/10/fd/bf/10fdbf20-d17d-a8a2-6058-c1ef9f221068/mzaf_9159790581568803090.plus.aac.p.m4a"},{"id":"price-tag","t":"Price Tag","a":"Jessie J B.o.B","y":"2011","bg":"#453c35","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/03/2f/30/032f3031-ca60-9967-b82c-1c9d2fb2b1c3/mzaf_7409978316038357876.plus.aac.p.m4a"},{"id":"just-a-dream","t":"Just a Dream","a":"Nelly","y":"2010","bg":"#592b21","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/ef/f3/adeff3b1-8ca7-fe69-4404-d4574be0ed5d/mzaf_4818658649735952743.plus.aac.p.m4a"},{"id":"last-night-on-earth","t":"Last Night on Earth","a":"Green Day","y":"2009","bg":"#693811","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/fc/40/58/fc405830-973b-4f15-23c1-6325d840505e/mzaf_6611125790634989435.plus.aac.p.m4a"},{"id":"21-guns","t":"21 Guns","a":"Green Day","y":"2009","bg":"#693811","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/7c/cc/4f/7ccc4f71-2f5c-6a49-d6e5-0c98c8d32e80/mzaf_9206916011381489115.plus.aac.p.m4a"},{"id":"viva-la-vida","t":"Viva La Vida","a":"Coldplay","y":"2008","bg":"#453b35","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/2b/04/65/2b0465c3-2db1-e461-2362-14b528456b8f/mzaf_1805426141027060154.plus.aac.p.m4a"},{"id":"fix-you","t":"Fix You","a":"Coldplay","y":"2005","bg":"#114969","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e5/42/e3/e542e340-a45c-695e-e0b8-6155e222ebc0/mzaf_14955746616030397665.plus.aac.p.m4a"},{"id":"boulevard","t":"Boulevard of Broken Dreams","a":"Green Day","y":"2004","bg":"#53272a","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/46/9a/fb/469afb85-6a00-c96d-c235-949baa7ce758/mzaf_8692192130778653752.plus.aac.p.m4a"},{"id":"somewhere-only-we-know","t":"Somewhere Only We Know","a":"Keane","y":"2004","bg":"#522a28","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/fa/93/fe/fa93fec8-adc4-1398-447a-69aca2622c25/mzaf_13909236668081502666.plus.aac.p.m4a"},{"id":"in-the-end","t":"In the End","a":"Linkin Park","y":"2000","bg":"#423b38","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/3f/cb/c7/3fcbc7cc-0606-7f6e-7fc3-793318cfd1ed/mzaf_16081918663584534594.plus.aac.p.m4a"},{"id":"dont-look-back","t":"Don't Look Back in Anger","a":"Oasis","y":"1995","bg":"#403e3b","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/c1/a1/39/c1a13912-0258-e74a-18ec-01f3b75f9882/mzaf_7973906281407419040.plus.aac.p.m4a"},{"id":"i-want-to-break-free","t":"I Want to Break Free","a":"Queen","y":"1984","bg":"#423c38","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/9e/60/bc/9e60bc2a-ae27-cc54-9821-429e7d2e8541/mzaf_17496100486957198237.plus.aac.p.m4a"},{"id":"too-much-heaven","t":"Too Much Heaven","a":"Bee Gees","y":"1978","bg":"#5a2420","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7c/00/d6/7c00d613-c377-d50f-2a6f-b969a68557eb/mzaf_3009144308125523567.plus.aac.p.m4a"},{"id":"baby-come-back","t":"Baby Come Back","a":"Player","y":"1977","bg":"#3c3941","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/57/22/1b/57221bb8-00f6-3d7f-2c38-7204e98c1dfb/mzaf_4332271055466605013.plus.aac.p.m4a"},{"id":"bohemian-rhapsody","t":"Bohemian Rhapsody","a":"Queen","y":"1975","bg":"#4a3930","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/35/5e/92/355e924d-728f-a25c-5e69-d8c53561658f/mzaf_3026523263970634353.plus.aac.p.m4a"},{"id":"piano-man","t":"Piano Man","a":"Billy Joel","y":"1973","bg":"#3d3d3e","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/8e/e4/51/8ee451b3-a74e-25fa-be4e-09ce04a39df0/mzaf_13595078232063121698.plus.aac.p.m4a"},{"id":"country-roads","t":"Take Me Home, Country Roads","a":"John Denver","y":"1971","bg":"#473734","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e7/d1/c4/e7d1c476-fa55-0be0-adf8-5fdcc7d18f3f/mzaf_3863812668516994856.plus.aac.p.m4a"}];   // 新→舊，同 index.html
+
+const $ = id => document.getElementById(id);
+const wall = $('wall'), stage = $('stage'), track = $('track'), hero = $('hero');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ROOM = [20,19,18];
+
+const years = ALBUMS.map(a => +a.y);
+$('lede').textContent =
+  `${ALBUMS.length} 張單曲封面，從 ${Math.max(...years)} 排回 ${Math.min(...years)}。往下捲，鏡頭會隨機停在其中一張。`;
+
+ALBUMS.forEach(a => {
+  const d = document.createElement('div');
+  d.className = 'sleeve';
+  d.style.background = a.bg;   // 封面還沒解碼前先給它自己的取色，不留黑格
+  d.innerHTML = `<img src="covers/${a.id}.jpg" alt="">`;
+  wall.appendChild(d);
+});
+const sleeves = [...wall.children];
+
+let T = Math.floor(Math.random() * ALBUMS.length);
+let G = {};        // 版面幾何，resize 時重算
+let audio = null;
+
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (p, a, b) => clamp((p - a) / (b - a));
+const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;   // 推鏡頭：慢起慢停
+const out = t => 1 - Math.pow(1 - t, 4);                              // 進場：快出慢收
+const lerp = (a, b, t) => a + (b - a) * t;
+const hex = h => [1,3,5].map(i => parseInt(h.slice(i, i+2), 16));
+
+function layout(){
+  const vw = innerWidth, vh = stage.clientHeight;
+  const narrow = vw < 700;
+  const cols = narrow ? 5 : 6, rows = Math.ceil(ALBUMS.length / cols);
+  const C = 150, gap = 16;
+  const W = cols*C + (cols-1)*gap, H = rows*C + (rows-1)*gap;
+  wall.style.setProperty('--cols', cols);
+  wall.style.setProperty('--cell', C + 'px');
+  wall.style.setProperty('--gap', gap + 'px');
+
+  const S = Math.round(Math.min(320, vw * .62, vh * .42));
+  const cx = vw/2 - S * (narrow ? .17 : .2);
+  const cy = vh * (narrow ? .36 : .4);
+  document.documentElement.style.setProperty('--S', S + 'px');
+  hero.style.transform = `translate(${cx - S/2}px, ${cy - S/2}px)`;
+  $('info').style.top = (cy + S/2 + 30) + 'px';
+
+  G = { vw, vh, cols, C, gap, W, H, S, cx, cy,
+        s0: Math.max(vw / W, vh / H) * 1.06,   // 開場：整面牆塞滿畫面
+        s1: S / C };                            // 定格：目標封面剛好 S
+  render();
+}
+
+function target(){
+  const col = T % G.cols, row = Math.floor(T / G.cols);
+  return [col*(G.C+G.gap) + G.C/2, row*(G.C+G.gap) + G.C/2];
+}
+
+function setAlbum(){
+  const a = ALBUMS[T];
+  $('heroImg').src = `covers/${a.id}.jpg`;
+  $('artist').textContent = a.a;
+  $('title').textContent = a.t;
+  $('meta').textContent = `${a.y} · 第 ${T + 1} 張，共 ${ALBUMS.length} 張`;
+  stopAudio();
+  $('playBtn').disabled = !a.p;
+  $('playLabel').textContent = a.p ? '試聽 30 秒' : '這首沒有試聽';
+}
+
+function render(){
+  const max = track.offsetHeight - stage.clientHeight;
+  const p = clamp(scrollY / max);
+  const step = t => reduce ? (t > 0 ? 1 : 0) : t;
+
+  // 1 推鏡頭：焦點從牆中心移到目標，畫面中心移到定格位置，順便把側角轉正
+  const e = step(ease(seg(p, .1, .55)));
+  const [tx, ty] = target();
+  const fx = lerp(G.W/2, tx, e), fy = lerp(G.H/2, ty, e);
+  const vx = lerp(G.vw/2, G.cx, e), vy = lerp(G.vh/2, G.cy, e);
+  const s = lerp(G.s0, G.s1, e);
+  const ry = lerp(-16, 0, e), rx = lerp(7, 0, e);
+  wall.style.transformOrigin = `${fx}px ${fy}px`;
+  wall.style.transform = `translate3d(${vx - fx}px, ${vy - fy}px, 0) scale(${s}) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  const dim = 1 - .965 * step(seg(p, .14, .5));
+  sleeves.forEach((el, i) => el.style.opacity = i === T ? 1 : dim);
+
+  // 開場字先退
+  const o = step(seg(p, .06, .22));
+  $('opening').style.opacity = 1 - o;
+  $('opening').style.transform = `translateY(${-40 * o}px)`;
+  $('scrim').style.opacity = 1 - step(seg(p, .1, .4));
+
+  // 2 房間換成這張封面的顏色
+  const c = step(seg(p, .3, .55)), to = hex(ALBUMS[T].bg);
+  const rgb = ROOM.map((v, i) => Math.round(lerp(v, to[i], c)));
+  document.documentElement.style.setProperty('--bg', `rgb(${rgb})`);
+
+  // 3 CD 滑出；捲動＝轉盤
+  hero.classList.toggle('on', p >= .55);
+  const d = step(out(seg(p, .58, .78)));
+  $('cdPos').style.transform = `translateX(${G.S * .46 * d}px)`;
+  $('cdDisc').style.transform = `rotate(${reduce ? 0 : p * 900}deg)`;
+
+  // 4 字與按鈕
+  const t1 = step(out(seg(p, .72, .86))), t2 = step(out(seg(p, .84, .96)));
+  const info = $('info');
+  info.style.opacity = t1;
+  info.style.visibility = t1 > 0 ? 'visible' : 'hidden';
+  $('title').style.clipPath = `inset(0 0 ${100 - 100 * t1}% 0)`;
+  $('actions').style.opacity = t2;
+  $('actions').style.transform = `translateY(${16 * (1 - t2)}px)`;
+  $('shuffleBtn').style.opacity = .6 * t2;
+}
+
+function stopAudio(){
+  if (audio){ audio.pause(); audio = null; }
+  hero.classList.remove('playing');
+  $('playBtn').classList.remove('playing-btn');
+  $('playLabel').textContent = '試聽 30 秒';
+}
+
+$('playBtn').addEventListener('click', () => {
+  if (audio){ stopAudio(); return; }
+  const a = ALBUMS[T];
+  audio = new Audio(a.p);
+  audio.addEventListener('ended', stopAudio);
+  audio.play().then(() => {
+    hero.classList.add('playing');
+    $('playBtn').classList.add('playing-btn');
+    $('playLabel').textContent = '暫停';
+  }).catch(() => {
+    audio = null;
+    $('playLabel').textContent = '試聽載入失敗，再按一次';
+  });
+});
+
+$('shuffleBtn').addEventListener('click', () => {
+  let n; do { n = Math.floor(Math.random() * ALBUMS.length); } while (n === T && ALBUMS.length > 1);
+  T = n; setAlbum();
+  scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+});
+
+let ticking = false;
+addEventListener('scroll', () => {
+  if (!ticking){ ticking = true; requestAnimationFrame(() => { ticking = false; render(); }); }
+}, { passive: true });
+addEventListener('resize', layout);
+
+setAlbum();
+layout();
+</script>
+</body>
+</html>
