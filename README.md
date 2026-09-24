@@ -6,6 +6,9 @@ cover's own color. Liner notes open on the right, if you wrote them.
 
 Static HTML. No framework, no build step. One data file.
 
+![The record wall](docs/intro.png)
+![Player and liner notes](docs/hero.png)
+
 Demo (my 30 singles): https://record-shelf-nine.vercel.app
 — and a scroll-driven opening at [/intro.html](https://record-shelf-nine.vercel.app/intro.html).
 

@@ -5,6 +5,9 @@
 
 靜態 HTML，零框架、零 build，資料只有一個檔。
 
+![封面牆](docs/intro.png)
+![播放器與唱片內頁](docs/hero.png)
+
 Demo（我自己的 30 首）：https://record-shelf-nine.vercel.app
 ＋捲動開場 [/intro.html](https://record-shelf-nine.vercel.app/intro.html)。
 
