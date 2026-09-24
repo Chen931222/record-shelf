@@ -41,7 +41,7 @@ export default async function handler(req, res) {
           `<meta property="og:site_name" content="唱片架">`,
           `<meta property="og:title" content="${esc(title)}">`,
           `<meta property="og:description" content="${esc(desc)}">`,
-          `<meta property="og:image" content="${esc(w.songs[0].art)}">`,
+          `<meta property="og:image" content="${esc((noted || w.songs[0]).art)}">`,   // 圖跟著被引用那句話的歌
           `<meta property="og:url" content="https://${esc(host)}/w/${id}">`,
           `<meta name="twitter:card" content="summary">`,
           `<meta name="description" content="${esc(desc)}">`,
