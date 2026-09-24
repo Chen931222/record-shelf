@@ -5,8 +5,9 @@
 
 線上版：https://record-shelf-nine.vercel.app
 
-單檔 `index.html`：歌曲清單（`ALBUMS`，新 → 舊）、內頁文案（`NOTES`）
-與試聽連結都寫在裡面；封面在 `covers/<id>.jpg`。
+資料在 `data.js`（2026-09-24 起）：歌曲清單（`ALBUMS`，新 → 舊）＋
+內頁文案（`NOTES`，key 對 id），`index.html` 主站與 `intro.html` 開場共用
+同一份；封面在 `covers/<id>.jpg`。頁面本身不含資料。
 部署用 `vercel --prod`（CLI 直傳工作區，非 git 自動部署）。
 
 根目錄的 `singles*.json` / `previews*.json` / `itunes-raw*.json` 是當初

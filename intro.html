@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700;0,800;1,800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* 實驗頁：唱片架的捲動開場。資料抄自 index.html 的 ALBUMS（2026-09-23），主站改資料這裡不會跟著變。 */
+/* 唱片架的捲動開場。資料來自共用 data.js（2026-09-24 起與主站同步）。 */
 :root{
   --room:#141312;            /* 關燈後的唱片行 */
   --ink:#F4EEE3;             /* 主站內頁同一種墨 */
@@ -179,19 +179,20 @@ a{color:inherit}
   </div>
 </div>
 
+<script src="data.js"></script>
 <script>
-const ALBUMS = [{"id":"birds-of-a-feather","t":"BIRDS OF A FEATHER","a":"Billie Eilish","y":"2024","bg":"#263f54","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/34/31/d3/3431d34e-847f-5d66-df83-0bce688d997e/mzaf_18106743962423782018.plus.aac.p.m4a"},{"id":"beautiful-things","t":"Beautiful Things","a":"Benson Boone","y":"2024","bg":"#3f3d3c","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4d/d5/00/4dd5006f-ee02-c3f1-94db-0ed4b8dd68f1/mzaf_14250561294796027079.plus.aac.p.m4a"},{"id":"end-of-beginning","t":"End of Beginning","a":"Djo","y":"2022","bg":"#373447","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/6e/df/af/6edfaf58-f901-e9b5-840b-9ac9e37f34b7/mzaf_8465065510938624101.plus.aac.p.m4a"},{"id":"beautiful-people","t":"Beautiful People","a":"Ed Sheeran Khalid","y":"2019","bg":"#3b3c40","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ee/18/89/ee188926-d676-0d85-b57e-93790f68c411/mzaf_5973313052079190433.plus.aac.p.m4a"},{"id":"colors","t":"Colors","a":"Black Pumas","y":"2019","bg":"#592922","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/38/3a/4d/383a4da2-6532-ff04-3bb3-e480ea7b94db/mzaf_10418172481474599121.plus.aac.p.m4a"},{"id":"i-dont-care","t":"I Don't Care","a":"Ed Sheeran Justin Bieber","y":"2019","bg":"#423f3c","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/84/bb/fb/84bbfbcd-9f63-dfa0-8660-ff86ced2eaaa/mzaf_11693010840075646451.plus.aac.p.m4a"},{"id":"pretender","t":"Pretender","a":"Official髭男dism","y":"2019","bg":"#631829","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/ce/0f/9c/ce0f9cf6-edfd-d964-317a-56781936a96b/mzaf_10158629645505453806.plus.aac.p.m4a"},{"id":"perfect-duet","t":"Perfect Duet","a":"Ed Sheeran Beyoncé","y":"2017","bg":"#15495c","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/61/db/5e/61db5e84-5cfb-181e-fbb7-8248035b7ab1/mzaf_12510832498126033168.plus.aac.p.m4a"},{"id":"castle-on-the-hill","t":"Castle on the Hill","a":"Ed Sheeran","y":"2017","bg":"#155165","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/07/be/08/07be085d-6f06-8b4e-cea1-f40b4dca3815/mzaf_12958775594313934161.plus.aac.p.m4a"},{"id":"locked-away","t":"Locked Away","a":"R. City Adam Levine","y":"2015","bg":"#484132","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f2/d5/d6/f2d5d634-483f-7e6f-3385-818d6ffbe91f/mzaf_13375317712317642570.plus.aac.p.m4a"},{"id":"lost-stars","t":"Lost Stars","a":"Adam Levine","y":"2014","bg":"#245c59","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b1/6b/3c/b16b3c77-ac12-55f6-c9ef-abe3a0548322/mzaf_13143599158828062444.plus.aac.p.m4a"},{"id":"stay-with-me","t":"Stay With Me","a":"Sam Smith","y":"2014","bg":"#403d3b","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d8/90/ef/d890ef3d-95b8-2224-5ff2-4ed56a359449/mzaf_8285804271834164275.plus.aac.p.m4a"},{"id":"only-love-can-hurt","t":"Only Love Can Hurt Like This","a":"Paloma Faith","y":"2014","bg":"#4e2d34","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e1/67/51/e167517f-d31f-ec28-10c2-dea246dde88e/mzaf_16290264548209879114.plus.aac.p.m4a"},{"id":"vivir-mi-vida","t":"Vivir Mi Vida","a":"Marc Anthony","y":"2013","bg":"#403d3b","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/10/fd/bf/10fdbf20-d17d-a8a2-6058-c1ef9f221068/mzaf_9159790581568803090.plus.aac.p.m4a"},{"id":"price-tag","t":"Price Tag","a":"Jessie J B.o.B","y":"2011","bg":"#453c35","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/03/2f/30/032f3031-ca60-9967-b82c-1c9d2fb2b1c3/mzaf_7409978316038357876.plus.aac.p.m4a"},{"id":"just-a-dream","t":"Just a Dream","a":"Nelly","y":"2010","bg":"#592b21","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/ef/f3/adeff3b1-8ca7-fe69-4404-d4574be0ed5d/mzaf_4818658649735952743.plus.aac.p.m4a"},{"id":"last-night-on-earth","t":"Last Night on Earth","a":"Green Day","y":"2009","bg":"#693811","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/fc/40/58/fc405830-973b-4f15-23c1-6325d840505e/mzaf_6611125790634989435.plus.aac.p.m4a"},{"id":"21-guns","t":"21 Guns","a":"Green Day","y":"2009","bg":"#693811","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/7c/cc/4f/7ccc4f71-2f5c-6a49-d6e5-0c98c8d32e80/mzaf_9206916011381489115.plus.aac.p.m4a"},{"id":"viva-la-vida","t":"Viva La Vida","a":"Coldplay","y":"2008","bg":"#453b35","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/2b/04/65/2b0465c3-2db1-e461-2362-14b528456b8f/mzaf_1805426141027060154.plus.aac.p.m4a"},{"id":"fix-you","t":"Fix You","a":"Coldplay","y":"2005","bg":"#114969","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e5/42/e3/e542e340-a45c-695e-e0b8-6155e222ebc0/mzaf_14955746616030397665.plus.aac.p.m4a"},{"id":"boulevard","t":"Boulevard of Broken Dreams","a":"Green Day","y":"2004","bg":"#53272a","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/46/9a/fb/469afb85-6a00-c96d-c235-949baa7ce758/mzaf_8692192130778653752.plus.aac.p.m4a"},{"id":"somewhere-only-we-know","t":"Somewhere Only We Know","a":"Keane","y":"2004","bg":"#522a28","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/fa/93/fe/fa93fec8-adc4-1398-447a-69aca2622c25/mzaf_13909236668081502666.plus.aac.p.m4a"},{"id":"in-the-end","t":"In the End","a":"Linkin Park","y":"2000","bg":"#423b38","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/3f/cb/c7/3fcbc7cc-0606-7f6e-7fc3-793318cfd1ed/mzaf_16081918663584534594.plus.aac.p.m4a"},{"id":"dont-look-back","t":"Don't Look Back in Anger","a":"Oasis","y":"1995","bg":"#403e3b","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/c1/a1/39/c1a13912-0258-e74a-18ec-01f3b75f9882/mzaf_7973906281407419040.plus.aac.p.m4a"},{"id":"i-want-to-break-free","t":"I Want to Break Free","a":"Queen","y":"1984","bg":"#423c38","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/9e/60/bc/9e60bc2a-ae27-cc54-9821-429e7d2e8541/mzaf_17496100486957198237.plus.aac.p.m4a"},{"id":"too-much-heaven","t":"Too Much Heaven","a":"Bee Gees","y":"1978","bg":"#5a2420","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7c/00/d6/7c00d613-c377-d50f-2a6f-b969a68557eb/mzaf_3009144308125523567.plus.aac.p.m4a"},{"id":"baby-come-back","t":"Baby Come Back","a":"Player","y":"1977","bg":"#3c3941","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/57/22/1b/57221bb8-00f6-3d7f-2c38-7204e98c1dfb/mzaf_4332271055466605013.plus.aac.p.m4a"},{"id":"bohemian-rhapsody","t":"Bohemian Rhapsody","a":"Queen","y":"1975","bg":"#4a3930","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/35/5e/92/355e924d-728f-a25c-5e69-d8c53561658f/mzaf_3026523263970634353.plus.aac.p.m4a"},{"id":"piano-man","t":"Piano Man","a":"Billy Joel","y":"1973","bg":"#3d3d3e","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/8e/e4/51/8ee451b3-a74e-25fa-be4e-09ce04a39df0/mzaf_13595078232063121698.plus.aac.p.m4a"},{"id":"country-roads","t":"Take Me Home, Country Roads","a":"John Denver","y":"1971","bg":"#473734","p":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e7/d1/c4/e7d1c476-fa55-0be0-adf8-5fdcc7d18f3f/mzaf_3863812668516994856.plus.aac.p.m4a"}];   // 新→舊，同 index.html
+const A = ALBUMS.map(x => ({id: x.id, t: x.title, a: x.collab ? x.artist + ' ' + x.collab : x.artist, y: x.year, bg: x.bg, p: x.preview}));   // 轉自共用 data.js
 
 const $ = id => document.getElementById(id);
 const wall = $('wall'), stage = $('stage'), track = $('track'), hero = $('hero');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ROOM = [20,19,18];
 
-const years = ALBUMS.map(a => +a.y);
+const years = A.map(a => +a.y);
 $('lede').textContent =
-  `${ALBUMS.length} 張單曲封面，從 ${Math.max(...years)} 排回 ${Math.min(...years)}。往下捲，鏡頭會隨機停在其中一張。`;
+  `${A.length} 張單曲封面，從 ${Math.max(...years)} 排回 ${Math.min(...years)}。往下捲，鏡頭會隨機停在其中一張。`;
 
-ALBUMS.forEach(a => {
+A.forEach(a => {
   const d = document.createElement('div');
   d.className = 'sleeve';
   d.style.background = a.bg;   // 封面還沒解碼前先給它自己的取色，不留黑格
@@ -200,7 +201,7 @@ ALBUMS.forEach(a => {
 });
 const sleeves = [...wall.children];
 
-let T = Math.floor(Math.random() * ALBUMS.length);
+let T = Math.floor(Math.random() * A.length);
 let G = {};        // 版面幾何，resize 時重算
 let audio = null;
 
@@ -214,7 +215,7 @@ const hex = h => [1,3,5].map(i => parseInt(h.slice(i, i+2), 16));
 function layout(){
   const vw = innerWidth, vh = stage.clientHeight;
   const narrow = vw < 700;
-  const cols = narrow ? 5 : 6, rows = Math.ceil(ALBUMS.length / cols);
+  const cols = narrow ? 5 : 6, rows = Math.ceil(A.length / cols);
   const C = 150, gap = 16;
   const W = cols*C + (cols-1)*gap, H = rows*C + (rows-1)*gap;
   wall.style.setProperty('--cols', cols);
@@ -240,11 +241,11 @@ function target(){
 }
 
 function setAlbum(){
-  const a = ALBUMS[T];
+  const a = A[T];
   $('heroImg').src = `covers/${a.id}.jpg`;
   $('artist').textContent = a.a;
   $('title').textContent = a.t;
-  $('meta').textContent = `${a.y} · 第 ${T + 1} 張，共 ${ALBUMS.length} 張`;
+  $('meta').textContent = `${a.y} · 第 ${T + 1} 張，共 ${A.length} 張`;
   stopAudio();
   $('playBtn').disabled = !a.p;
   $('playLabel').textContent = a.p ? '試聽 30 秒' : '這首沒有試聽';
@@ -274,7 +275,7 @@ function render(){
   $('scrim').style.opacity = 1 - step(seg(p, .1, .4));
 
   // 2 房間換成這張封面的顏色
-  const c = step(seg(p, .3, .55)), to = hex(ALBUMS[T].bg);
+  const c = step(seg(p, .3, .55)), to = hex(A[T].bg);
   const rgb = ROOM.map((v, i) => Math.round(lerp(v, to[i], c)));
   document.documentElement.style.setProperty('--bg', `rgb(${rgb})`);
 
@@ -304,7 +305,7 @@ function stopAudio(){
 
 $('playBtn').addEventListener('click', () => {
   if (audio){ stopAudio(); return; }
-  const a = ALBUMS[T];
+  const a = A[T];
   audio = new Audio(a.p);
   audio.addEventListener('ended', stopAudio);
   audio.play().then(() => {
@@ -318,7 +319,7 @@ $('playBtn').addEventListener('click', () => {
 });
 
 $('shuffleBtn').addEventListener('click', () => {
-  let n; do { n = Math.floor(Math.random() * ALBUMS.length); } while (n === T && ALBUMS.length > 1);
+  let n; do { n = Math.floor(Math.random() * A.length); } while (n === T && A.length > 1);
   T = n; setAlbum();
   scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
 });
