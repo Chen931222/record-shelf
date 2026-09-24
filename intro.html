@@ -179,8 +179,21 @@ a{color:inherit}
   </div>
 </div>
 
+<script src="site.config.js"></script>
 <script src="data.js"></script>
 <script>
+document.title = SITE.name + ' — 開場';
+document.querySelectorAll('.logo').forEach(l => {
+  l.firstChild.textContent = SITE.name;
+  const s = l.querySelector('span'); if (s) s.textContent = SITE.latin.toUpperCase();
+});
+const introH1 = document.querySelector('.hero-copy h1, h1'); if (introH1) introH1.textContent = SITE.name;
+const openBtn = document.querySelector('.btn.solid'); if (openBtn) openBtn.textContent = '打開' + SITE.name + ' →';
+if (!ALBUMS.length) {
+  document.body.innerHTML = '<p style="color:#fff;font:500 15px/1.8 system-ui;padding:40vh 24px 0;text-align:center">' +
+    'data.js 還是空的。先加一首歌：<br><code>node scripts/add-song.mjs "歌手" "歌名"</code></p>';
+  throw new Error('ALBUMS is empty');
+}
 const A = ALBUMS.map(x => ({id: x.id, t: x.title, a: x.collab ? x.artist + ' ' + x.collab : x.artist, y: x.year, bg: x.bg, p: x.preview}));   // 轉自共用 data.js
 
 const $ = id => document.getElementById(id);

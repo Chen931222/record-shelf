@@ -53,19 +53,28 @@ const slugify = s => s.normalize('NFKD').toLowerCase()
   .replace(/['’.]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'song';
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const esc = s => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-const SUSPECT = /remix|acoustic|live|karaoke|tribute|cover|instrumental|sped.?up|slowed/i;
+const SUSPECT = /\b(remix|acoustic|live|karaoke|tribute|covers?|renditions?|lullaby|instrumental|hardstyle|nightcore|8d|lo-?fi|edit|versions?)\b|sped.?up|slowed/i; // \b 防「Discovery」誤中 cover
 
 /* ---------- 1. 搜尋 ---------- */
 const term = `${ARTIST} ${SONG}`;
-const url = `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=8&country=${COUNTRY}`;
+const url = `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=25&country=${COUNTRY}`;
 const res = await fetch(url);
 if (!res.ok) { console.error(`iTunes API ${res.status}`); process.exit(1); }
 const { results } = await res.json();
-const songs = results.filter(r => r.kind === 'song' && r.previewUrl);
+let songs = results.filter(r => r.kind === 'song' && r.previewUrl);
 if (!songs.length) { console.error(`找不到「${term}」（${COUNTRY} 商店）。換個寫法或 --country 試試。`); process.exit(1); }
+// 排序：歌名跟輸入完全一致的原曲優先，可疑版本（remix/acoustic/...）沉底；同分保持 iTunes 原序
+const norm = s => s.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
+songs = songs.map((r, i) => {
+  let score = 0;
+  if (norm(r.trackName) === norm(SONG)) score += 4;
+  if (norm(r.artistName).includes(norm(ARTIST))) score += 2;
+  if (SUSPECT.test(r.trackName) || SUSPECT.test(r.collectionName || '')) score -= 3;
+  return { r, i, score };
+}).sort((a, b) => b.score - a.score || a.i - b.i).map(x => x.r);
 
 console.log(`\n候選（${COUNTRY} 商店）：`);
-songs.forEach((r, i) => {
+songs.slice(0, 8).forEach((r, i) => {
   const mark = i === PICK - 1 ? '→' : ' ';
   console.log(` ${mark} ${i + 1}. ${r.trackName} — ${r.artistName}（${r.collectionName}, ${r.releaseDate?.slice(0, 4)}）`);
 });
@@ -76,6 +85,8 @@ if (!hit) { console.error(`--pick ${PICK} 超出範圍`); process.exit(1); }
 const warns = [];
 if (SUSPECT.test(hit.trackName)) warns.push(`版本可疑：「${hit.trackName}」——封面圖可能直接印字，換 --pick 或 --country 比對。`);
 if (SUSPECT.test(hit.collectionName || '')) warns.push(`收錄專輯可疑：「${hit.collectionName}」。`);
+if (!norm(hit.artistName).includes(norm(ARTIST)))
+  warns.push(`歌手對不上：你查「${ARTIST}」，選到的是「${hit.artistName}」——可能是翻唱。這個商店多半沒有原唱，換 --country（歌手母國）再試。`);
 
 /* ---------- 3. 組欄位 ---------- */
 const id = flags.id || slugify(hit.trackName);

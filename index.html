@@ -463,8 +463,20 @@ body.notes-open .notes-scrim{opacity:1;pointer-events:auto}
   <div class="footer-side right"><span class="roll" id="footYear"></span></div>
 </footer>
 
+<script src="site.config.js"></script>
 <script src="data.js"></script>
 <script>
+/* ================= site.config 套用＋空資料防呆 ================= */
+document.title = SITE.name + ' — ' + SITE.latin;
+document.querySelectorAll('.logo').forEach(l => {
+  l.firstChild.textContent = SITE.name;
+  const s = l.querySelector('span'); if (s) s.textContent = SITE.latin.toUpperCase();
+});
+if (!ALBUMS.length) {
+  document.body.innerHTML = '<p style="color:#fff;font:500 15px/1.8 system-ui;padding:40vh 24px 0;text-align:center">' +
+    'data.js 還是空的。先加一首歌：<br><code>node scripts/add-song.mjs "歌手" "歌名"</code></p>';
+  throw new Error('ALBUMS is empty');
+}
 
 /* ================= build DOM ================= */
 const stack = document.getElementById('coverStack');
