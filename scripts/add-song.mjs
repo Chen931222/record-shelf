@@ -153,7 +153,13 @@ while ((m = re.exec(body)) !== null) {
   if (+m[1] <= +year) { insertAt = arrStart + m.index; break; }
 }
 const before = dataText.slice(0, insertAt), after = dataText.slice(insertAt);
-writeFileSync(DATA, before + entry + after.replace(/^\n/, m0 => m0), 'utf8');
+// 加歌＝整理過這面牆：TENDED 改成今天（本機日期），牆上的灰從零開始算（見 aging.js）
+const now = new Date(), today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+let out = before + entry + after.replace(/^\n/, m0 => m0);
+out = /^const TENDED = '[^']*';/m.test(out)
+  ? out.replace(/^const TENDED = '[^']*';/m, `const TENDED = '${today}';`)
+  : out.replace('const ALBUMS = [', `const TENDED = '${today}';\n\nconst ALBUMS = [`);
+writeFileSync(DATA, out, 'utf8');
 
 const count = (readFileSync(DATA, 'utf8').match(/preview:'https/g) || []).length;
 console.log(`\n✅ 寫入 data.js（現在 ${count} 首）＋ covers/${id}.jpg`);

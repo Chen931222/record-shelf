@@ -6,7 +6,8 @@
    PUT    ?id=abc  x-edit-key  修改
    DELETE ?id=abc  x-edit-key  刪除
 
-   資料：rs:wall:<id> 全文、rs:sum:<id> 列表用摘要、rs:walls 有序集合（分數＝更新時間）。 */
+   資料：rs:wall:<id> 全文、rs:sum:<id> 列表用摘要、rs:walls 有序集合（分數＝更新時間）、
+   rs:care:<id> 灰塵量（見 _lib/care.js；讀牆與列表都會附上 wear／heard）。 */
 
 import {
   send, fail, query, readJson, ipKey, allow, newKey, hashKey, keyMatches,
@@ -14,6 +15,7 @@ import {
 } from './_lib/util.js';
 import { configured, backend } from './_lib/store.js';
 import { lookupAll } from './_lib/itunes.js';
+import { careOf, publicCare } from './_lib/care.js';
 
 const PAGE = 24;
 const validId = id => /^[a-z0-9]{4,12}$/.test(id || '');
@@ -107,9 +109,10 @@ async function persist(w) {
 /* ---------- handlers ---------- */
 async function getOne(res, id) {
   if (!validId(id)) return fail(res, 404, '找不到這面牆。');
-  const w = await loadWall(id);
-  if (!w || w.hidden) return fail(res, 404, '找不到這面牆。它可能被主人刪掉了。');
-  return send(res, 200, publicWall(w));
+  const [raw, rawCare] = await one('MGET', `${P}wall:${id}`, `${P}care:${id}`);
+  const w = raw ? JSON.parse(raw) : null;
+  if (!w || !w.id || w.hidden) return fail(res, 404, '找不到這面牆。它可能被主人刪掉了。');
+  return send(res, 200, { ...publicWall(w), ...publicCare(careOf(rawCare, w)) });
 }
 
 async function list(res, q) {
@@ -120,8 +123,13 @@ async function list(res, q) {
   ]);
   let walls = [];
   if (ids.length) {
-    const raws = await one('MGET', ...ids.map(i => `${P}sum:${i}`));
-    walls = raws.filter(Boolean).map(r => JSON.parse(r));
+    const raws = await one('MGET', ...ids.map(i => `${P}sum:${i}`), ...ids.map(i => `${P}care:${i}`));
+    const now = Date.now();
+    walls = ids.map((_, i) => {
+      if (!raws[i]) return null;
+      const s = JSON.parse(raws[i]);
+      return { ...s, ...publicCare(careOf(raws[ids.length + i], s), now) };
+    }).filter(Boolean);
   }
   return send(res, 200, { walls, total, next: offset + PAGE < total ? offset + PAGE : null });
 }
@@ -165,7 +173,7 @@ async function update(req, res, id) {
 async function remove(req, res, id) {
   await authed(req, id);
   await run([
-    ['DEL', `${P}wall:${id}`, `${P}sum:${id}`, `${P}rep:${id}`],
+    ['DEL', `${P}wall:${id}`, `${P}sum:${id}`, `${P}rep:${id}`, `${P}care:${id}`],
     ['ZREM', `${P}walls`, id],
   ]);
   return send(res, 200, { ok: true });

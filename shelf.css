@@ -58,6 +58,18 @@ button{font:inherit;color:inherit}
   background:linear-gradient(118deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 74%,rgba(255,255,255,.07) 100%);
 }
 
+/* 積灰：逛牆時一眼看出哪面牆很久沒人來聽（--a 0–1 由 API 的 wear 給；主播放器那一版在 aging.css） */
+.mosaic.aged img{filter:saturate(calc(1 - .45 * var(--a))) contrast(calc(1 - .48 * var(--a)))}
+.mosaic .dust{
+  position:absolute;inset:0;z-index:1;pointer-events:none;opacity:var(--a);
+  background:
+    radial-gradient(circle at 18% 22%,rgba(226,220,208,.9) 0 1px,transparent 1.6px),
+    radial-gradient(circle at 63% 14%,rgba(226,220,208,.8) 0 .9px,transparent 1.5px),
+    radial-gradient(circle at 81% 47%,rgba(226,220,208,.85) 0 1.1px,transparent 1.7px),
+    radial-gradient(circle at 34% 71%,rgba(226,220,208,.7) 0 .9px,transparent 1.5px),
+    linear-gradient(to bottom,rgba(196,190,178,.58),rgba(196,190,178,.3) 55%,rgba(196,190,178,.2));
+}
+
 /* 側標（obi）：日本唱片封套左緣那條紙帶，站名直排，腳底印目錄編號 */
 .obi{
   position:absolute;left:0;top:0;bottom:0;z-index:2;

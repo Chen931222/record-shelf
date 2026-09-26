@@ -120,6 +120,10 @@ FORM：新到貨牆（封面朝外的陳列架）。
       if (w.covers[i]) { var im = el('img'); im.src = w.covers[i]; im.alt = ''; im.loading = 'lazy'; m.append(im); }
       else { var b = el('div', 'fill'); b.style.background = w.bg; m.append(b); }   // 不到四首：空格填這面牆自己的顏色
     }
+    if (w.wear > 0) {   // 越久沒人來聽，封面積的灰越厚（api/_lib/care.js）
+      m.classList.add('aged'); m.style.setProperty('--a', w.wear);
+      var dust = el('div', 'dust'); dust.setAttribute('aria-hidden', 'true'); m.append(dust);
+    }
     var ob = el('div', 'obi'); ob.setAttribute('aria-hidden', 'true');
     ob.append(el('b', null, w.name), el('i', null, 'RS-' + String(w.id).toUpperCase()));
     m.append(ob);

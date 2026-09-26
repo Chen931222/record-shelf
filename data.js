@@ -2,6 +2,10 @@
    index.html 與 intro.html 共用；這是唯一要編輯的資料來源。
    ALBUMS：新→舊；NOTES：唱片內頁，key 對 ALBUMS 的 id。 */
 
+/* 上次整理這面牆的日期（YYYY-MM-DD）。越久沒整理，牆上的灰越厚（90 天積滿）；
+   add-song 加歌時會自動改成當天。不要這個效果：site.config.js 設 aging:false。 */
+const TENDED = '2026-09-24';
+
 /* ================= data（新 → 舊）================= */
 const ALBUMS = [
   {id:'birds-of-a-feather', title:'BIRDS OF A FEATHER', artist:'Billie Eilish', collab:'',

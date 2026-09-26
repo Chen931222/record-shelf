@@ -104,9 +104,10 @@ function updateNotesFade(){
 
 function render(dir){ // dir: 1 = 往舊的, -1 = 往新的, 0 = 初始
   const a = ALBUMS[idx];
-  document.body.style.backgroundColor = a.bg;
-  document.querySelector('.cd').style.setProperty('--hole', a.bg);
-  document.body.style.setProperty('--sheet', darkTint(a.bg));
+  const bg = window.AGING ? AGING.bg(a.bg) : a.bg;   // 會變老的牆：房間顏色跟著老（aging.js，只在 ?age= 時存在）
+  document.body.style.backgroundColor = bg;
+  document.querySelector('.cd').style.setProperty('--hole', bg);
+  document.body.style.setProperty('--sheet', darkTint(bg));
 
   covers.forEach((c, i) => {
     c.classList.remove('active','leaving-up','leaving-down','entering-up');
@@ -161,6 +162,8 @@ $('playBtn').addEventListener('click', () => {
   if (a.preview){ audio.src = a.preview; audio.play().catch(()=>{}); }
 });
 audio.addEventListener('ended', stop);
+// 試聽滿 10 秒＝有人來聽過：公開牆擦掉一層灰（aging.js → /api/care）
+audio.addEventListener('timeupdate', () => { if (audio.currentTime >= 10 && window.AGING) AGING.heard(); });
 $('prevBtn').addEventListener('click', () => go(idx - 1));
 $('nextBtn').addEventListener('click', () => go(idx + 1));
 
@@ -267,3 +270,4 @@ dock.addEventListener('mouseleave', () => {
 $('footDate').textContent = ALBUMS[0].date;
 $('footYear').textContent = ALBUMS[0].year;
 render(0);
+if (window.AGING) AGING.mount();
