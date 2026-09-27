@@ -5,6 +5,10 @@
 
 靜態 HTML，零框架、零 build，資料只有一個檔。
 
+[![53 秒介紹影片](docs/promo-poster.jpg)](docs/promo.mp4)
+
+▶ [看 53 秒介紹影片](docs/promo.mp4)
+
 ![封面牆](docs/intro.png)
 ![播放器與唱片內頁](docs/hero.png)
 
