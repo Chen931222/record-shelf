@@ -6,9 +6,9 @@ cover's own color. Liner notes open on the right, if you wrote them.
 
 Static HTML. No framework, no build step. One data file.
 
-[![53-second intro video](docs/promo-poster.jpg)](docs/promo.mp4)
+[![53-second intro video](docs/promo-poster.jpg)](https://cdn.jsdelivr.net/gh/Chen931222/record-shelf@5fa3121/docs/promo.mp4)
 
-▶ [Watch the 53-second intro](docs/promo.mp4) (Mandarin narration, burned-in Chinese subtitles)
+▶ [Watch the 53-second intro](https://cdn.jsdelivr.net/gh/Chen931222/record-shelf@5fa3121/docs/promo.mp4) (Mandarin narration, burned-in Chinese subtitles)
 
 ![The record wall](docs/intro.png)
 ![Player and liner notes](docs/hero.png)
