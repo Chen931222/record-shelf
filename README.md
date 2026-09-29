@@ -1,7 +1,7 @@
 # record-shelf
 
-A one-page record wall for the singles you actually own. Click a sleeve and
-the record slides out, a 30-second preview plays, and the page takes on the
+A one-page record wall for the singles you actually own. Press play and
+the record slides out of its sleeve, a 30-second preview plays, and the page takes on the
 cover's own color. Liner notes open on the right, if you wrote them.
 
 Static HTML. No framework, no build step. One data file.
@@ -32,8 +32,24 @@ python -m http.server 8533        # or any static file server
 ```
 
 Open http://localhost:8533, look at every cover once, then put your name on
-it in `site.config.js`. Deploy anywhere static files go: GitHub Pages
-(Settings → Pages → deploy from branch) or `vercel --prod`.
+it in `site.config.js`, set `url` to your site's address (leave it `''` until
+you deploy), and set `walls` to `false` unless you connect the public gallery.
+Run `node scripts/about.mjs` afterwards. Deploy anywhere static files go:
+GitHub Pages (Settings → Pages → deploy from branch) or `vercel --prod`.
+
+## For readers that don't run JavaScript: "About" and robots.txt
+
+The wall is drawn by JavaScript, but the crawlers behind ChatGPT, Claude and
+Perplexity don't run it, and LINE/Threads link previews only read the raw HTML.
+`scripts/about.mjs` writes a short description into `index.html` from
+`site.config.js` and `data.js`: it is what the header's 「關於」 (About) opens,
+and without JavaScript it also lists every song on the wall. The `<head>` gets a
+description, JSON-LD, and a share image (the newest cover; needs `url`).
+`add-song` runs it for you; after editing `site.config.js`, run it yourself.
+
+`robots.txt` blocks the three crawlers that collect pages to train models
+(GPTBot, ClaudeBot, Applebot-Extended) and leaves search and AI citation open.
+Delete those three blocks if you don't want that.
 
 ## Adding songs
 

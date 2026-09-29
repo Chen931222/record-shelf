@@ -212,8 +212,26 @@ function step(dir){
   go(t, dir);
   setTimeout(() => locked = false, 620);
 }
+/* 「關於」：原生 popover，點外面、按 Esc 由瀏覽器收起。開著的時候，滾輪、方向鍵、空白鍵、滑動都不漏到後面的牆；
+   Tab 離開就收起。網址帶 #about 直接打開（分享「這是什麼」用） */
+const aboutEl = document.getElementById('about');
+const aboutBtn = document.querySelector('[popovertarget="about"]');
+let aboutOpen = false;
+if (aboutEl && typeof aboutEl.showPopover === 'function') {
+  aboutEl.addEventListener('toggle', e => {
+    aboutOpen = e.newState === 'open';
+    if (aboutBtn) aboutBtn.classList.toggle('on', aboutOpen);
+  });
+  aboutEl.addEventListener('focusout', e => {
+    if (aboutOpen && e.relatedTarget && !aboutEl.contains(e.relatedTarget) && e.relatedTarget !== aboutBtn) aboutEl.hidePopover();
+  });
+  const openFromHash = () => { if (location.hash === '#about') { try { aboutEl.showPopover(); } catch (err) {} } };
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);   // 同一頁裡點到 #about 的連結也會打開
+}
 const notesEl = $('notes');
 window.addEventListener('wheel', e => {
+  if (aboutOpen) return;
   if (notesEl.contains(e.target)){   // 內頁自己捲得動時，先讓它捲完再換曲
     const room = e.deltaY > 0
       ? notesEl.scrollTop + notesEl.clientHeight < notesEl.scrollHeight - 1
@@ -224,6 +242,7 @@ window.addEventListener('wheel', e => {
   step(e.deltaY > 0 ? 1 : -1);
 }, {passive:true});
 window.addEventListener('keydown', e => {
+  if (aboutOpen && e.key !== 'Escape') return;   // 「關於」開著：鍵盤留給它（Esc 由瀏覽器收起它）
   if (e.key === 'Escape'){ openNotes(false); return; }
   // 焦點在內頁且內頁還捲得動時，方向鍵交還給瀏覽器捲動（否則鍵盤使用者讀不到溢出的部分）
   if (notesEl.contains(document.activeElement) && (e.key === 'ArrowDown' || e.key === 'ArrowUp')){
@@ -239,7 +258,7 @@ window.addEventListener('keydown', e => {
 let touchY = null, touchX = null;
 window.addEventListener('touchstart', e => {
   if (e.target.closest('.dock') || e.target.closest('.notes')) return;
-  if (document.body.classList.contains('notes-open')) return;
+  if (document.body.classList.contains('notes-open') || aboutOpen) return;
   touchY = e.touches[0].clientY; touchX = e.touches[0].clientX;
 }, {passive:true});
 window.addEventListener('touchend', e => {

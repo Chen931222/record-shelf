@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>唱片架 — Record Shelf</title>
+<!-- 下面兩段標記之間由 scripts/about.mjs 產生（add-song 加歌時會自動跑），不要手改 -->
+<!-- about:head -->
+<meta name="description" content="唱片架是一面放單曲的唱片牆。按播放，唱片從封套滑出來，播 30 秒 iTunes 試聽，背景跟著封面換色。這面有 30 首。不用登入也能做一面自己的。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="唱片架">
+<meta property="og:title" content="唱片架 — Record Shelf">
+<meta property="og:description" content="唱片架是一面放單曲的唱片牆。按播放，唱片從封套滑出來，播 30 秒 iTunes 試聽，背景跟著封面換色。這面有 30 首。不用登入也能做一面自己的。">
+<meta property="og:image" content="https://record-shelf-walls.vercel.app/covers/birds-of-a-feather.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"唱片架","alternateName":"Record Shelf","url":"https://record-shelf-walls.vercel.app/","description":"唱片架是一面放單曲的唱片牆。按播放，唱片從封套滑出來，播 30 秒 iTunes 試聽，背景跟著封面換色。這面有 30 首。不用登入也能做一面自己的。","inLanguage":"zh-Hant"}</script>
+<!-- /about:head -->
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💿</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,6 +66,55 @@ body{
 .head-nav .report-link[disabled]{cursor:default}
 .logo{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:16px}
 .logo span{font-style:normal;font-weight:500;opacity:.55;font-size:12px;margin-left:8px;letter-spacing:.14em}
+/* ---------- 關於：像封底的版權頁小字 ----------
+   說明寫在原始 HTML 的 main 元素裡（scripts/about.mjs 產生）：不跑 JS 的讀者讀得到，正文抽取工具也不會把它當導覽丟掉
+   （放在 header 裡時 defuddle 一個字都沒留，2026-09-29 實測）。用原生 popover：開在最上層，不受 header／stage
+   進場動畫留下的 transform 影響；點外面、按 Esc 由瀏覽器收起。人要點開才看見，不跟封面搶畫面 */
+.about-link{position:relative}
+.about-link::before{content:"";position:absolute;inset:-8px -8px -10px}   /* 點擊範圍放大，字不動 */
+.about-link::after{content:"▾";content:"▾" / "";margin-left:.35em;font-size:.8em;opacity:.6}
+.about-link.on{opacity:1;border-bottom-color:currentColor}
+.about-link.on::after{content:"▴";content:"▴" / ""}
+.about-sheet{
+  position:fixed;inset:auto;top:74px;right:28px;margin:0;
+  width:min(27em,calc(100vw - 56px));
+  max-height:calc(100dvh - 110px);overflow-y:auto;overscroll-behavior:contain;
+  padding:15px 18px 14px;
+  background:rgb(var(--sheet));
+  border:1px solid rgba(var(--ink),.18);
+  border-radius:4px;
+  color:rgba(var(--ink),.86);
+  font-size:13.5px;line-height:1.9;letter-spacing:.012em;
+  text-spacing-trim:trim-start;
+  user-select:text;
+}
+.about-sheet::backdrop{background:transparent}
+.about-label{
+  margin-bottom:6px;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:11px;font-weight:400;letter-spacing:.16em;line-height:1.72;
+  color:rgba(var(--ink),.72);
+}
+.about-sheet p+p{margin-top:8px}
+.about-sheet .nw{white-space:nowrap}
+.about-sheet .about-src{
+  margin-top:13px;padding-top:11px;
+  border-top:1px solid rgba(var(--ink),.18);
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:11px;line-height:1.72;letter-spacing:.04em;
+  color:rgba(var(--ink),.72);
+}
+.about-sheet a{color:inherit;text-underline-offset:3px;text-decoration-color:rgba(var(--ink),.6);overflow-wrap:anywhere}
+.about-list{margin-top:10px;padding-left:1.5em;font-size:12.5px;line-height:1.7}
+@media (max-width:900px){   /* 跟「內頁」一樣改成底部抽屜：不蓋封面、落在拇指區 */
+  .about-sheet{
+    top:auto;left:0;right:0;bottom:0;width:auto;max-height:82vh;
+    padding:18px clamp(20px,6vw,32px) calc(24px + env(safe-area-inset-bottom));
+    border-width:1px 0 0;border-radius:4px 4px 0 0;
+  }
+  .about-sheet::backdrop{background:rgba(0,0,0,.5)}
+}
+@supports not selector(:popover-open){.about-sheet{display:none}}   /* 不支援 popover 的舊瀏覽器：不要攤在畫面上 */
 /* ---------- stage ---------- */
 .stage{
   position:fixed;inset:0;
@@ -321,8 +381,9 @@ body.notes-open .notes-scrim{opacity:1;pointer-events:auto}
 }
 .footer-side{min-width:64px}
 .footer-side.right{text-align:right}
-.footer-center{opacity:.6;animation:pulse 2.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
+.footer-center{opacity:.74;animation:pulse 2.6s ease-in-out infinite}
+/* 淡出最低停在 .74：30 張封面的底色裡，最吃虧的 #245c59 要 .68 才有 4.5:1（原本 .35 只有 2.34:1） */
+@keyframes pulse{0%,100%{opacity:.74}50%{opacity:1}}
 .roll{display:inline-block;transition:transform .3s, opacity .3s}
 .roll.out{transform:translateY(-8px);opacity:0}
 /* ---------- intro ---------- */
@@ -401,6 +462,7 @@ body.notes-open .notes-scrim{opacity:1;pointer-events:auto}
     <a class="intro-link" href="intro.html">看開場</a>
     <a class="intro-link" href="walls.html">逛唱片牆</a>
     <a class="intro-link" href="make.html">做一面你的</a>
+    <button class="intro-link about-link" type="button" popovertarget="about">關於</button>
     <button class="intro-link report-link" id="reportBtn" type="button" hidden>檢舉</button>
   </nav>
 </header>
@@ -476,6 +538,15 @@ body.notes-open .notes-scrim{opacity:1;pointer-events:auto}
     </section>
   </div>
  </aside>
+ <!-- about:body -->
+ <section id="about" class="about-sheet" popover aria-labelledby="about-title">
+   <h2 class="about-label" id="about-title">關於唱片架</h2>
+   <p>唱片架是一面放單曲的唱片牆。按播放，唱片從封套滑出來，播 30 秒 iTunes 試聽，背景跟著封面換色。這面是我的 30 首，新的在前，<span class="nw">上次整理是 2026-09-24</span>。</p>
+   <p>試聽和封面來自 iTunes，有些歌台灣商店沒有。你也可以<a href="make.html">做一面</a>：不用登入，搜歌名放上去就好；公開的牆越久沒人來聽，封面積的灰越厚。</p>
+   <p class="about-src">程式碼 MIT 開源，可以自己架（封面和內頁文案不在授權內）：<a href="https://github.com/Chen931222/record-shelf">github.com/Chen931222/record-shelf</a></p>
+   <noscript><ol class="about-list"><li>BIRDS OF A FEATHER · Billie Eilish · 2024</li><li>Beautiful Things · Benson Boone · 2024</li><li>End of Beginning · Djo · 2022</li><li>Beautiful People · Ed Sheeran、Khalid · 2019</li><li>Colors · Black Pumas · 2019</li><li>I Don&#39;t Care · Ed Sheeran、Justin Bieber · 2019</li><li>Pretender · Official髭男dism · 2019</li><li>Perfect Duet · Ed Sheeran、Beyoncé · 2017</li><li>Castle on the Hill · Ed Sheeran · 2017</li><li>Locked Away · R. City、Adam Levine · 2015</li><li>Lost Stars · Adam Levine · 2014</li><li>Stay With Me · Sam Smith · 2014</li><li>Only Love Can Hurt Like This · Paloma Faith · 2014</li><li>Vivir Mi Vida · Marc Anthony · 2013</li><li>Price Tag · Jessie J、B.o.B · 2011</li><li>Just a Dream · Nelly · 2010</li><li>Last Night on Earth · Green Day · 2009</li><li>21 Guns · Green Day · 2009</li><li>Viva La Vida · Coldplay · 2008</li><li>Fix You · Coldplay · 2005</li><li>Boulevard of Broken Dreams · Green Day · 2004</li><li>Somewhere Only We Know · Keane · 2004</li><li>In the End · Linkin Park · 2000</li><li>Don&#39;t Look Back in Anger · Oasis · 1995</li><li>I Want to Break Free · Queen · 1984</li><li>Too Much Heaven · Bee Gees · 1978</li><li>Baby Come Back · Player · 1977</li><li>Bohemian Rhapsody · Queen · 1975</li><li>Piano Man · Billy Joel · 1973</li><li>Take Me Home, Country Roads · John Denver · 1971</li></ol></noscript>
+ </section>
+ <!-- /about:body -->
 </main>
 
 <div class="dock-wrap">

@@ -1,0 +1,13 @@
+# 搜尋與 AI 引用全部放行（OAI-SearchBot、Claude-SearchBot、PerplexityBot、Googlebot、Bingbot…）。
+# 只擋拿網頁內容去訓練模型的三隻；不想擋就刪掉這三段。
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: *
+Allow: /

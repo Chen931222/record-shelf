@@ -163,6 +163,9 @@ writeFileSync(DATA, out, 'utf8');
 
 const count = (readFileSync(DATA, 'utf8').match(/preview:'https/g) || []).length;
 console.log(`\n✅ 寫入 data.js（現在 ${count} 首）＋ covers/${id}.jpg`);
+// 首頁「關於」與 <head> 的說明跟著資料更新（給不跑 JS 的 AI 爬蟲和分享預覽看，見 scripts/about.mjs）
+try { const { writeAbout } = await import('./about.mjs'); writeAbout(); console.log('   index.html 的「關於」也更新了'); }
+catch (e) { console.warn(`   ⚠️  index.html 的「關於」沒更新：${e.message}。手動跑 node scripts/about.mjs`); }
 console.log(`\n下一步：
   1. 起本機看一眼封面有沒有印字、bg 順不順眼：python -m http.server 8533
   2. 想寫內頁就把這段貼進 data.js 的 NOTES：

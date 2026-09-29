@@ -1,6 +1,6 @@
 # record-shelf — 唱片架
 
-把你實際擁有的單曲做成一頁唱片牆。點封套抽出唱片、播 30 秒試聽、
+把你實際擁有的單曲做成一頁唱片牆。按播放，唱片從封套滑出來、播 30 秒試聽，
 背景色跟著封面走；寫了內頁的歌，右側翻開唱片內頁。
 
 靜態 HTML，零框架、零 build，資料只有一個檔。
@@ -31,8 +31,20 @@ python -m http.server 8533        # 任何靜態伺服器都行
 ```
 
 開 http://localhost:8533 把每張封面看過一遍，然後到 `site.config.js`
-換上你的站名。部署丟任何靜態空間都行：GitHub Pages（Settings → Pages
-→ deploy from branch）或 `vercel --prod`。
+換上你的站名，`url` 改成你的網址（還沒上線就留空 `''`）；沒接公開展示牆就把
+`walls` 改成 `false`。改完跑一次 `node scripts/about.mjs`。部署丟任何靜態
+空間都行：GitHub Pages（Settings → Pages → deploy from branch）或 `vercel --prod`。
+
+## 給不跑 JS 的讀者：「關於」和 robots.txt
+
+牆是 JS 畫出來的，但 ChatGPT、Claude、Perplexity 的爬蟲不跑 JS，LINE／Threads
+的連結預覽也只看原始 HTML。`scripts/about.mjs` 依 `site.config.js` 和 `data.js`
+把一段說明寫進 `index.html`：頁首「關於」點開就是它；沒有 JS 時會附上整面牆的歌單。
+`<head>` 另外有描述、JSON-LD，以及分享預覽圖（最新那首的封面，要填 `url` 才有）。
+`add-song` 加歌時會自動跑；改了 `site.config.js` 就自己跑一次。
+
+`robots.txt` 預設擋三隻拿網頁內容去訓練模型的爬蟲（GPTBot、ClaudeBot、
+Applebot-Extended），搜尋和 AI 引用照樣放行。不想擋就刪掉那三段。
 
 ## 加一首歌
 
